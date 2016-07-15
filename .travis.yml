@@ -1,0 +1,5 @@
+language: c
+install:
+  - sudo apt-get -qq install bison flex
+script:
+  - make && make test
