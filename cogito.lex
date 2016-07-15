@@ -1,5 +1,7 @@
 %{
 #include <stdlib.h>
+#include "parser.tab.h"
+#define YYSTYPE char*
 %}
 
 white     [ \t\n]+
@@ -11,8 +13,8 @@ item      [A-Za-z0-9:/\*\.\-\$\{\}_]+
 %%
 
 {white}       {}
-{macro}       { printf("macro: %s\n", yytext); }
-{item}        { printf("item: %s\n", yytext); }
+{macro}       { printf("macro: %s\n", yytext); return MACRO; }
+{item}        { printf("item: %s\n", yytext); return ITEM; }
 
 "ON" return ON;
 ";" return END;
