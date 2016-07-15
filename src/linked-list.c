@@ -1,12 +1,5 @@
 #include "linked-list.h"
 
-node_t* ll_build(char *val) {
-  node_t *node = (node_t*) malloc(sizeof(node_t));
-  node->val = val;
-  node->next = NULL;
-  return node;
-}
-
 void ll_append(node_t *head, char *val) {
   node_t *tail = ll_build(val);
   node_t *ptr = head;
@@ -15,6 +8,13 @@ void ll_append(node_t *head, char *val) {
     ptr = ptr->next;
   }
   ptr->next = tail;
+}
+
+node_t* ll_build(char *val) {
+  node_t *node = (node_t*) malloc(sizeof(node_t));
+  node->val = val;
+  node->next = NULL;
+  return node;
 }
 
 void ll_print(node_t *node) {
@@ -27,23 +27,23 @@ void ll_print(node_t *node) {
   printf("\n");
 }
 
-size_t ll_val_size_sum(node_t *head) {
-  size_t size = 0;
-  node_t *ptr = head;
-
-  while(ptr != NULL) {
-    size += strlen(ptr->val);
-    ptr = ptr->next;
-  }
-  return size;
-}
-
 int ll_size(node_t *head) {
   int size = 0;
   node_t *ptr = head;
 
   while(ptr != NULL) {
     size += 1;
+    ptr = ptr->next;
+  }
+  return size;
+}
+
+size_t ll_val_size_sum(node_t *head) {
+  size_t size = 0;
+  node_t *ptr = head;
+
+  while(ptr != NULL) {
+    size += strlen(ptr->val);
     ptr = ptr->next;
   }
   return size;

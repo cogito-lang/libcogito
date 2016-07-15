@@ -11,10 +11,10 @@ typedef struct node {
   struct node *next;
 } node_t;
 
-node_t* ll_build(char *val);
 void ll_append(node_t *head, char *val);
+node_t* ll_build(char *val);
 void ll_print(node_t *node);
-size_t ll_val_size_sum(node_t *head);
 int ll_size(node_t *head);
+size_t ll_val_size_sum(node_t *head);
 
 #endif
