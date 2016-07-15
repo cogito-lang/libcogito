@@ -14,8 +14,8 @@ void yyerror(const char *s);
 
 %token COMMA END MACRO ON ITEM
 
-%type <str> COMMA END MACRO ON
-%type <node> ITEM list
+%type <str> COMMA END MACRO ON ITEM
+%type <node> list
 
 %%
 input:
@@ -28,8 +28,8 @@ statement:
 ;
 
 list:
-  ITEM                      { $$ = ll_build(yylval.str); }
-  | list COMMA ITEM         { $1->next = ll_build(yylval.str); $$ = $1; }
+  ITEM                      { $$ = ll_build($1); }
+  | list COMMA ITEM         { $1->next = ll_build($3); $$ = $1; }
 ;
 %%
 
