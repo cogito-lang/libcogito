@@ -26,3 +26,25 @@ void ll_print(node_t *node) {
   }
   printf("\n");
 }
+
+size_t ll_val_size_sum(node_t *head) {
+  size_t size = 0;
+  node_t *ptr = head;
+
+  while(ptr != NULL) {
+    size += strlen(ptr->val);
+    ptr = ptr->next;
+  }
+  return size;
+}
+
+int ll_size(node_t *head) {
+  int size = 0;
+  node_t *ptr = head;
+
+  while(ptr != NULL) {
+    size += 1;
+    ptr = ptr->next;
+  }
+  return size;
+}
