@@ -7,6 +7,16 @@ node_t* ll_build(char *val) {
   return node;
 }
 
+void ll_append(node_t *head, char *val) {
+  node_t *tail = ll_build(val);
+  node_t *ptr = head;
+
+  while(ptr->next != NULL) {
+    ptr = ptr->next;
+  }
+  ptr->next = tail;
+}
+
 void ll_print(node_t *node) {
   node_t *ptr = node;
 

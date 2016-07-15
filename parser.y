@@ -4,7 +4,7 @@
 #include "src/linked-list.h"
 
 int yylex();
-void yyerror(const char *s);
+void yyerror(const char *str);
 %}
 
 %union {
@@ -24,17 +24,17 @@ input:
 ;
 
 statement:
-  MACRO list ON list END    {}
+  MACRO list ON list END    { ll_print($2); ll_print($4); }
 ;
 
 list:
   ITEM                      { $$ = ll_build($1); }
-  | list COMMA ITEM         { $1->next = ll_build($3); $$ = $1; }
+  | list COMMA ITEM         { ll_append($1, $3); $$ = $1; }
 ;
 %%
 
-void yyerror(const char *s) {
-  printf("%s\n", s);
+void yyerror(const char *str) {
+  printf("%s\n", str);
 }
 
 int main() {

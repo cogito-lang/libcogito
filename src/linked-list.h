@@ -10,6 +10,7 @@ typedef struct node {
 } node_t;
 
 node_t* ll_build(char *val);
+void ll_append(node_t *head, char *val);
 void ll_print(node_t *node);
 
 #endif

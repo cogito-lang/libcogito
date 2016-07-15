@@ -1,5 +1,6 @@
 %{
 #include <stdlib.h>
+#include "src/linked-list.h"
 #include "parser.tab.h"
 %}
 
