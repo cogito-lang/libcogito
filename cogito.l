@@ -12,6 +12,9 @@ macro     {allow}|{deny}
 on        (?i:on)
 item      [A-Za-z0-9:/\*\.\-\$\{\}_]+
 
+%option noinput
+%option nounput
+
 %%
 
 {white}       {}
