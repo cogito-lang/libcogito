@@ -1,11 +1,16 @@
 #include "statement.h"
 
-statement_t* stmt_build(char *macro, node_t *actions, node_t *resources) {
-  statement_t *stmt = (statement_t*) malloc(sizeof(statement_t));
-  stmt->macro = macro;
-  stmt->actions = actions;
-  stmt->resources = resources;
-  return stmt;
+static int converted_size(node_t *head) {
+  return 4 * ll_size(head) + ll_val_size_sum(head) + 1;
+}
+
+static void format_macro(char *macro) {
+  int idx;
+  int macro_len = strlen(macro);
+
+  for (idx = 0; idx < macro_len; idx++) {
+    macro[idx] = (idx == 0) ? toupper(macro[idx]) : tolower(macro[idx]);
+  }
 }
 
 static void ll_to_str(node_t *head, char *converted, int size) {
@@ -33,17 +38,12 @@ static void ll_to_str(node_t *head, char *converted, int size) {
   converted[size - 1] = '\0';
 }
 
-static int converted_size(node_t *head) {
-  return 4 * ll_size(head) + ll_val_size_sum(head) + 1;
-}
-
-static void format_macro(char *macro) {
-  int idx;
-  int macro_len = strlen(macro);
-
-  for (idx = 0; idx < macro_len; idx++) {
-    macro[idx] = (idx == 0) ? toupper(macro[idx]) : tolower(macro[idx]);
-  }
+statement_t* stmt_build(char *macro, node_t *actions, node_t *resources) {
+  statement_t *stmt = (statement_t*) malloc(sizeof(statement_t));
+  stmt->macro = macro;
+  stmt->actions = actions;
+  stmt->resources = resources;
+  return stmt;
 }
 
 void stmt_to_json(statement_t *stmt) {
