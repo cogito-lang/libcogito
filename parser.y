@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "src/linked-list.h"
+#include "src/statement.h"
 
 int yylex();
 void yyerror(const char *str);
@@ -10,21 +11,23 @@ void yyerror(const char *str);
 %union {
   char *str;
   node_t *node;
+  statement_t *stmt;
 }
 
 %token COMMA END MACRO ON ITEM
 
 %type <str> COMMA END MACRO ON ITEM
 %type <node> list
+%type <stmt> statement
 
 %%
 input:
   /* empty */
-  | input statement         { printf("hi\n"); }
+  | input statement         { stmt_to_json($2); }
 ;
 
 statement:
-  MACRO list ON list END    { ll_print($2); ll_print($4); }
+  MACRO list ON list END    { $$ = stmt_build($1, $2, $4); }
 ;
 
 list:

@@ -11,4 +11,7 @@ typedef struct statement {
   node_t *resources;
 } statement_t;
 
+statement_t* stmt_build(char *macro, node_t *actions, node_t *resources);
+void stmt_to_json(statement_t *stmt);
+
 #endif
