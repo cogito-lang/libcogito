@@ -4,7 +4,7 @@
 #include "src/linked-list.h"
 
 int yylex();
-int yyerror(char *s);
+void yyerror(const char *s);
 %}
 
 %union {
@@ -33,7 +33,7 @@ list:
 ;
 %%
 
-int yyerror(char *s) {
+void yyerror(const char *s) {
   printf("%s\n", s);
 }
 
