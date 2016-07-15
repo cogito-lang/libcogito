@@ -1,20 +1,26 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#define YYSTYPE char*
+#include "src/linked-list.h"
+
+int yylex();
+int yyerror(char *s);
 %}
 
-%token COMMA END ITEM MACRO ON
+%union {
+  char *str;
+  node_t *node;
+}
+
+%token COMMA END MACRO ON ITEM
+
+%type <str> COMMA END MACRO ON
+%type <node> ITEM list
 
 %%
 input:
   /* empty */
-  | input line
-;
-
-line:
-  END
-  | statement END           { printf("%s\n", $1); }
+  | input statement         { printf("hi\n"); }
 ;
 
 statement:
@@ -22,8 +28,8 @@ statement:
 ;
 
 list:
-  ITEM                      {}
-  | ITEM COMMA list         {}
+  ITEM                      { $$ = ll_build(yylval.str); }
+  | list COMMA ITEM         { $1->next = ll_build(yylval.str); $$ = $1; }
 ;
 %%
 
