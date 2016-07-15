@@ -6,6 +6,7 @@
 
 int yylex();
 void yyerror(const char *str);
+extern FILE *yyin;
 %}
 
 %union {
@@ -40,6 +41,9 @@ void yyerror(const char *str) {
   printf("%s\n", str);
 }
 
-int main() {
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    yyin = fopen(argv[1], "r");
+  }
   return yyparse();
 }

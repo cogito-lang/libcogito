@@ -14,3 +14,6 @@ clean:
 	$(CLEAN) cogito
 	$(CLEAN) lex.yy.c
 	$(CLEAN) parser.tab.c parser.tab.h
+
+test:
+	[ "$$(./cogito test-files/input.iam)" = "$$(cat test-files/output.json)" ] && echo 'Passed.' || (echo 'Failed.' && exit 1)
