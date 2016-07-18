@@ -1,9 +1,11 @@
 #include "statement.h"
 
+// The size of the JSON string converted from the linked list
 static int converted_size(node_t *head) {
   return 4 * ll_size(head) + ll_val_size_sum(head) + 1;
 }
 
+// Capitalize the macro string
 static void format_macro(char *macro) {
   int idx;
   int macro_len = strlen(macro);
@@ -13,6 +15,7 @@ static void format_macro(char *macro) {
   }
 }
 
+// Convert the given linked list to a JSON-like array string
 static void ll_to_str(node_t *head, char *converted, int size) {
   int location = 1;
   converted[0] = '[';
@@ -38,6 +41,7 @@ static void ll_to_str(node_t *head, char *converted, int size) {
   converted[size - 1] = '\0';
 }
 
+// Build a statement object from the given macro, actions, and resources
 statement_t* stmt_build(char *macro, node_t *actions, node_t *resources) {
   statement_t *stmt = (statement_t*) malloc(sizeof(statement_t));
   stmt->macro = macro;
@@ -46,6 +50,7 @@ statement_t* stmt_build(char *macro, node_t *actions, node_t *resources) {
   return stmt;
 }
 
+// Converts a given statement object to a JSON string
 void stmt_to_json(statement_t *stmt) {
   int actions_size = converted_size(stmt->actions);
   int resources_size = converted_size(stmt->resources);
