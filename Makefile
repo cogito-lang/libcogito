@@ -1,4 +1,4 @@
-CFLAGS   = -g -Wall -lfl
+CFLAGS   = -g -Wall -lfl -ljson-c
 CLEAN    = rm -f
 
 cogito: clean lex.yy.c parser.tab.c parser.tab.h

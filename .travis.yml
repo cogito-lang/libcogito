@@ -1,5 +1,7 @@
 language: c
 install:
   - sudo apt-get -qq install bison flex
+  - (lsb_release -r | grep -q '12.04') && sudo apt-get -y -qq install python-software-properties && sudo add-apt-repository -y ppa:ondrej/php5 && sudo apt-get update
+  - sudo apt-get -y -qq install libjson-c-dev
 script:
   - make && make test
