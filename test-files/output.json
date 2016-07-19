@@ -1,5 +1,12 @@
 {
-  "Effect": "Allow",
-  "Action": ["alpha", "beta", "gamma"],
-  "Resource": ["delta", "epsilon"]
-}
+   "Effect": "Allow",
+   "Action": [
+     "alpha",
+     "beta",
+     "gamma"
+   ],
+   "Resource": [
+     "delta",
+     "epsilon"
+   ]
+ }
