@@ -37,9 +37,9 @@ allow s3:PutRecord on kinesis:::stream/push*;
 
 ## Dependencies
 
-This program depends on both [GNU Bison](https://www.gnu.org/software/bison/) and [flex](http://flex.sourceforge.net/). On Mac OSX you can install them using [homebrew](http://brew.sh/) like so:
+This program depends on [GNU Bison](https://www.gnu.org/software/bison/), [flex](http://flex.sourceforge.net/), and [json-c](https://github.com/json-c/json-c). On Mac OSX you can install them using [homebrew](http://brew.sh/) like so:
 
-    $ brew install flex bison
+    $ brew install flex bison json-c
 
 You may need to link them manually depending on your configuration, which you can do with:
 
