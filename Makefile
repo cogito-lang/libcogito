@@ -2,7 +2,7 @@ CFLAGS   = -g -Wall -lfl -ljson-c
 CLEAN    = rm -f
 
 cogito: clean src/lex.yy.c src/parser.tab.c src/parser.tab.h
-	gcc main.c src/*.c -o cogito $(CFLAGS)
+	gcc src/*.c -o cogito $(CFLAGS)
 
 src/lex.yy.c:
 	flex -o src/lex.yy.c src/cogito.l
@@ -15,5 +15,6 @@ clean:
 	$(CLEAN) src/lex.yy.c
 	$(CLEAN) src/parser.tab.c src/parser.tab.h
 
-test:
+test: clean src/lex.yy.c src/parser.tab.c src/parser.tab.h
+	gcc main.c src/*.c -o cogito $(CFLAGS)
 	test-files/test
