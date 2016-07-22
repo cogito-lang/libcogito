@@ -1,0 +1,3 @@
+[submodule "src/ccan"]
+	path = src/ccan
+	url = git@github.com:rustyrussell/ccan.git

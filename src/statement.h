@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <json-c/json.h>
+#include "ccan/ccan/json/json.h"
 #include "linked-list.h"
 
 typedef struct statement {
@@ -13,6 +13,6 @@ typedef struct statement {
 } statement_t;
 
 statement_t* stmt_build(char *macro, node_t *actions, node_t *resources);
-char* stmt_to_json(statement_t *stmt);
+JsonNode* stmt_to_json(statement_t *stmt);
 
 #endif

@@ -5,7 +5,7 @@
 #include "statement.h"
 
 int yylex();
-void yyerror(char *output, const char *str);
+void yyerror(JsonNode *json_arr, const char *str);
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern int yyparse();
@@ -19,7 +19,7 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
   statement_t *stmt;
 }
 
-%parse-param { char *output }
+%parse-param { JsonNode *json_arr }
 
 %token COMMA END MACRO ON ITEM
 
@@ -30,7 +30,7 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 %%
 input:
   /* empty */
-  | input statement         { strcpy(output, stmt_to_json($2)); }
+  | input statement { json_append_element(json_arr, stmt_to_json($2)); }
 ;
 
 statement:
@@ -43,12 +43,25 @@ list:
 ;
 %%
 
-void yyerror(char *output, const char *str) {
+void yyerror(JsonNode *json_arr, const char *str) {
   printf("%s\n", str);
 }
 
-void cg_parse(char *input, char *output) {
+static void cleanup_json_arr(JsonNode *json_arr) {
+  JsonNode *json_obj = json_arr->children.head;
+  while (json_obj != NULL) {
+    json_delete(json_obj);
+    json_obj = json_obj->next;
+  }
+  json_delete(json_arr);
+}
+
+char* cg_parse(char *input) {
+  JsonNode *json_arr = json_mkarray();
   YY_BUFFER_STATE buffer = yy_scan_string(input);
-  yyparse(output);
+  yyparse(json_arr);
   yy_delete_buffer(buffer);
+  char *output = json_stringify(json_arr, "  ");
+  cleanup_json_arr(json_arr);
+  return output;
 }
