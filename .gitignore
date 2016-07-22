@@ -1,5 +1,5 @@
 /cogito
 /cogito.dSYM/
-/lex.yy.c
-/parser.tab.c
-/parser.tab.h
+/src/lex.yy.c
+/src/parser.tab.c
+/src/parser.tab.h
