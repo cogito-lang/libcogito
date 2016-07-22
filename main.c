@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/linked-list.h"
-#include "src/statement.h"
-#include "src/parser.tab.h"
+#include "cogito.h"
 
 void cg_parse(char *input, char *output);
 
