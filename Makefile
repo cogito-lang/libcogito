@@ -1,19 +1,19 @@
 CFLAGS   = -g -Wall -lfl -ljson-c
 CLEAN    = rm -f
 
-cogito: clean lex.yy.c parser.tab.c parser.tab.h
-	gcc main.c lex.yy.c parser.tab.c src/*.c -o cogito $(CFLAGS)
+cogito: clean src/lex.yy.c src/parser.tab.c src/parser.tab.h
+	gcc main.c src/*.c -o cogito $(CFLAGS)
 
-lex.yy.c:
-	flex cogito.l
+src/lex.yy.c:
+	flex -o src/lex.yy.c src/cogito.l
 
-parser.tab.c parser.tab.h:
-	bison -d parser.y
+src/parser.tab.c src/parser.tab.h:
+	bison -d src/parser.y -o src/parser.tab.c
 
 clean:
 	$(CLEAN) cogito
-	$(CLEAN) lex.yy.c
-	$(CLEAN) parser.tab.c parser.tab.h
+	$(CLEAN) src/lex.yy.c
+	$(CLEAN) src/parser.tab.c src/parser.tab.h
 
 test:
 	test-files/test

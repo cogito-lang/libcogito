@@ -1,8 +1,8 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/linked-list.h"
-#include "src/statement.h"
+#include "linked-list.h"
+#include "statement.h"
 
 int yylex();
 void yyerror(char *output, const char *str);
