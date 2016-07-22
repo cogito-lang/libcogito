@@ -4,8 +4,11 @@
 #include "src/statement.h"
 #include "parser.tab.h"
 
-extern int cg_parse(char *filepath);
+void cg_parse(char *input, char *output);
 
 int main(int argc, char **argv) {
-  return cg_parse(argv[1]);
+  char output[1000];
+  cg_parse(argv[1], output);
+  printf("%s\n", output);
+  return 0;
 }

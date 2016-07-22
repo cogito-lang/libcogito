@@ -5,7 +5,7 @@
 #include "src/statement.h"
 
 int yylex();
-void yyerror(const char *str);
+void yyerror(char *output, const char *str);
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern int yyparse();
@@ -19,6 +19,8 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
   statement_t *stmt;
 }
 
+%parse-param { char *output }
+
 %token COMMA END MACRO ON ITEM
 
 %type <str> COMMA END MACRO ON ITEM
@@ -28,7 +30,7 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 %%
 input:
   /* empty */
-  | input statement         { stmt_to_json($2); }
+  | input statement         { strcpy(output, stmt_to_json($2)); }
 ;
 
 statement:
@@ -41,12 +43,12 @@ list:
 ;
 %%
 
-void yyerror(const char *str) {
+void yyerror(char *output, const char *str) {
   printf("%s\n", str);
 }
 
-void cg_parse(char *input) {
+void cg_parse(char *input, char *output) {
   YY_BUFFER_STATE buffer = yy_scan_string(input);
-  yyparse();
+  yyparse(output);
   yy_delete_buffer(buffer);
 }

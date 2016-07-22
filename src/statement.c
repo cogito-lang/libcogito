@@ -48,12 +48,13 @@ statement_t* stmt_build(char *macro, node_t *actions, node_t *resources) {
 }
 
 // Converts a given statement object to a JSON string
-void stmt_to_json(statement_t *stmt) {
+char* stmt_to_json(statement_t *stmt) {
   json_object *json = json_object_new_object();
   add_statement_macro(stmt->macro, json);
   add_statement_elements(stmt->actions, json, "Action");
   add_statement_elements(stmt->resources, json, "Resource");
-  printf("%s\n", json_object_to_json_string_ext(json, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
-  // Free the memory allocated for the JSON object
+
+  char *json_string = json_object_to_json_string_ext(json, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY);
   cleanup_json(json);
+  return json_string;
 }

@@ -13,6 +13,6 @@ typedef struct statement {
 } statement_t;
 
 statement_t* stmt_build(char *macro, node_t *actions, node_t *resources);
-void stmt_to_json(statement_t *stmt);
+char* stmt_to_json(statement_t *stmt);
 
 #endif
