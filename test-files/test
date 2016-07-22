@@ -1,0 +1,6 @@
+#!/bin/bash
+
+EXPECTED=$(cat test-files/output.json)
+ACTUAL=$(./cogito "$(cat test-files/input.iam)")
+
+[ "$EXPECTED" = "$ACTUAL" ] && echo 'Passed.' || (echo 'Failed.' && exit 1)

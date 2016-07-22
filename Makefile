@@ -2,7 +2,7 @@ CFLAGS   = -g -Wall -lfl -ljson-c
 CLEAN    = rm -f
 
 cogito: clean lex.yy.c parser.tab.c parser.tab.h
-	gcc lex.yy.c parser.tab.c src/*.c -o cogito $(CFLAGS)
+	gcc main.c lex.yy.c parser.tab.c src/*.c -o cogito $(CFLAGS)
 
 lex.yy.c:
 	flex cogito.l
@@ -16,4 +16,4 @@ clean:
 	$(CLEAN) parser.tab.c parser.tab.h
 
 test:
-	[ "$$(./cogito test-files/input.iam)" = "$$(cat test-files/output.json)" ] && echo 'Passed.' || (echo 'Failed.' && exit 1)
+	test-files/test

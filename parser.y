@@ -6,7 +6,11 @@
 
 int yylex();
 void yyerror(const char *str);
-extern FILE *yyin;
+
+typedef struct yy_buffer_state * YY_BUFFER_STATE;
+extern int yyparse();
+extern YY_BUFFER_STATE yy_scan_string(char *str);
+extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 %}
 
 %union {
@@ -41,9 +45,8 @@ void yyerror(const char *str) {
   printf("%s\n", str);
 }
 
-int main(int argc, char **argv) {
-  if (argc == 2) {
-    yyin = fopen(argv[1], "r");
-  }
-  return yyparse();
+void cg_parse(char *input) {
+  YY_BUFFER_STATE buffer = yy_scan_string(input);
+  yyparse();
+  yy_delete_buffer(buffer);
 }
