@@ -5,6 +5,6 @@
 #include "src/statement.h"
 #include "src/parser.tab.h"
 
-void cg_parse(char *input, char *output);
+char* cg_parse(char *input);
 
 #endif
