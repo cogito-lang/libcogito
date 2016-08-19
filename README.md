@@ -35,6 +35,17 @@ allow dynamodb:Batch*, dynamodb:DeleteItem on dynamodb:::table/push*;
 allow s3:PutRecord on kinesis:::stream/push*;
 ```
 
+## Getting Started
+
+To get started, run:
+
+```
+autoreconf
+./configure
+make
+make install
+```
+
 ## Dependencies
 
 This program depends on [GNU Bison](https://www.gnu.org/software/bison/) and [flex](http://flex.sourceforge.net/). On Mac OSX you can install them using [homebrew](http://brew.sh/) like so:
