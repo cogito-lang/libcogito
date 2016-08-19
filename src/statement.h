@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "ccan/ccan/json/json.h"
+#include "json.h"
 #include "linked-list.h"
 
 typedef struct statement {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "linked-list.h"
 #include "statement.h"
-#include "parser.tab.h"
+#include "parser.h"
 %}
 
 white     [ \f\r\n\t]+
@@ -14,6 +14,7 @@ item      [A-Za-z0-9:/\*\.\-\$\{\}_]+
 
 %option noinput
 %option nounput
+%option noyywrap
 
 %%
 
