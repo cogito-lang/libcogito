@@ -3,6 +3,7 @@ Makefile.in
 .deps
 
 /aclocal.m4
+/ar-lib
 /autom4te.cache/
 /cogito.dSYM/
 /compile
@@ -17,4 +18,5 @@ Makefile.in
 *.o
 src/cogito
 src/cogito.[co]
+src/libcogito.a
 src/parser.[ch]

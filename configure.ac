@@ -1,5 +1,7 @@
 AC_INIT([cogito], [1.0], [oss@localytics.com])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+AM_PROG_AR
+AC_PROG_RANLIB
 AC_PROG_CC
 AC_PROG_YACC
 AC_PROG_LEX
