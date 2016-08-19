@@ -1,4 +1,7 @@
 language: c
+branches:
+  only:
+  - master
 install:
 - sudo apt-get -qq install bison flex
 script:
