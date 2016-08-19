@@ -14,6 +14,7 @@ item      [A-Za-z0-9:/\*\.\-\$\{\}_]+
 
 %option noinput
 %option nounput
+%option noyywrap
 
 %%
 
