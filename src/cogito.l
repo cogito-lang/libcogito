@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "linked-list.h"
 #include "statement.h"
-#include "parser.tab.h"
+#include "parser.h"
 %}
 
 white     [ \f\r\n\t]+
