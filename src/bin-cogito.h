@@ -5,6 +5,7 @@
 #include "src/statement.h"
 #include "src/parser.h"
 
-char* cg_parse(char *input);
+char* cg_to_json(char *input);
+char* cg_to_iam(char *input);
 
 #endif

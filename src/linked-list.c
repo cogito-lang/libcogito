@@ -11,6 +11,14 @@ void ll_append(node_t *head, char *val) {
   ptr->next = tail;
 }
 
+node_t* ll_update(node_t *head, char *val) {
+  if (head == NULL) {
+    return ll_build(val);
+  }
+  ll_append(head, val);
+  return head;
+}
+
 // Build a list node
 node_t* ll_build(char *val) {
   node_t *node = (node_t*) malloc(sizeof(node_t));

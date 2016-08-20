@@ -1,19 +1,43 @@
 #!/bin/bash
 
-EXPECTED=$(cat test-files/output.json)
-ACTUAL=$(./src/cogito "$(cat test-files/input.iam)")
+printf 'Testing IAM to JSON... '
 
-if [ "$EXPECTED" = "$ACTUAL" ]; then
-  echo 'Passed.'
+EXPECTED_JSON=$(cat test-files/output.json)
+ACTUAL_JSON=$(./src/cogito to-json "$(cat test-files/input.iam)")
+
+if [ "$EXPECTED_JSON" = "$ACTUAL_JSON" ]; then
+  printf 'Passed.\n\n'
 else
+  echo ''
   printf '=%.0s' {1..100}
   printf '\nExpected:\n'
-  echo "$EXPECTED"
+  echo "$EXPECTED_JSON"
   printf '=%.0s' {1..100}
   printf '\nActual:\n'
-  echo "$ACTUAL"
+  echo "$ACTUAL_JSON"
   printf '=%.0s' {1..100}
   printf '\nDiff:\n'
-  diff <(echo "$EXPECTED") <(echo "$ACTUAL")
+  diff <(echo "$EXPECTED_JSON") <(echo "$ACTUAL_JSON")
+  exit 1
+fi
+
+printf 'Testing JSON to IAM... '
+
+EXPECTED_IAM=$(cat test-files/output.iam)
+ACTUAL_IAM=$(./src/cogito to-iam "$(cat test-files/input.json)")
+
+if [ "$EXPECTED_IAM" = "$ACTUAL_IAM" ]; then
+  printf 'Passed.\n\n'
+else
+  echo ''
+  printf '=%.0s' {1..100}
+  printf '\nExpected:\n'
+  echo "$EXPECTED_IAM"
+  printf '=%.0s' {1..100}
+  printf '\nActual:\n'
+  echo "$ACTUAL_IAM"
+  printf '=%.0s' {1..100}
+  printf '\nDiff:\n'
+  diff <(echo "$EXPECTED_IAM") <(echo "$ACTUAL_IAM")
   exit 1
 fi
