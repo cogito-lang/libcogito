@@ -46,6 +46,31 @@ make
 make install
 ```
 
+### Binary usage
+
+You can convert between JSON and Cogito syntax on the command line:
+
+```bash
+$ cogito to-json 'ALLOW ec2:DescribeInstances ON *;'
+[
+  {
+    "Effect": "Allow",
+    "Action": [
+      "ec2:DescribeInstances"
+    ],
+    "Resource": [
+      "*"
+    ]
+  }
+]
+
+$ cogito to-iam '[{ "Effect": "Allow", "Action": "ec2:DescribeInstances", "Resource": "*" }]'
+ALLOW
+  ec2:DescribeInstances
+ON
+  *;
+```
+
 ## Dependencies
 
 This program depends on [GNU Bison](https://www.gnu.org/software/bison/) and [flex](http://flex.sourceforge.net/). On Mac OSX you can install them using [homebrew](http://brew.sh/) like so:
