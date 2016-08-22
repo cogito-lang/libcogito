@@ -69,6 +69,10 @@ char* cg_to_json(char *input_iam) {
 
 char* cg_to_iam(char *input_json) {
   JsonNode *policies = json_decode(input_json);
+  if (policies == NULL) {
+    fprintf(stderr, "Invalid JSON!\n");
+    exit(EXIT_FAILURE);
+  }
   JsonNode *policy;
   SmartString *smartstring = smart_string_new();
 
