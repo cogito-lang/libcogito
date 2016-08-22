@@ -1,19 +1,85 @@
 #!/bin/bash
 
-EXPECTED=$(cat test-files/output.json)
-ACTUAL=$(./src/cogito "$(cat test-files/input.iam)")
+printf 'Testing IAM to JSON... '
 
-if [ "$EXPECTED" = "$ACTUAL" ]; then
-  echo 'Passed.'
+EXPECTED_JSON=$(cat test-files/output.json)
+ACTUAL_JSON=$(./src/cogito to-json "$(cat test-files/input.iam)")
+
+if [ "$EXPECTED_JSON" = "$ACTUAL_JSON" ]; then
+  printf 'Passed.\n\n'
 else
+  echo ''
   printf '=%.0s' {1..100}
   printf '\nExpected:\n'
-  echo "$EXPECTED"
+  echo "$EXPECTED_JSON"
   printf '=%.0s' {1..100}
   printf '\nActual:\n'
-  echo "$ACTUAL"
+  echo "$ACTUAL_JSON"
   printf '=%.0s' {1..100}
   printf '\nDiff:\n'
-  diff <(echo "$EXPECTED") <(echo "$ACTUAL")
+  diff <(echo "$EXPECTED_JSON") <(echo "$ACTUAL_JSON")
+  exit 1
+fi
+
+printf 'Testing JSON to IAM... '
+
+EXPECTED_IAM=$(cat test-files/output.iam)
+ACTUAL_IAM=$(./src/cogito to-iam "$(cat test-files/input.json)")
+
+if [ "$EXPECTED_IAM" = "$ACTUAL_IAM" ]; then
+  printf 'Passed.\n\n'
+else
+  echo ''
+  printf '=%.0s' {1..100}
+  printf '\nExpected:\n'
+  echo "$EXPECTED_IAM"
+  printf '=%.0s' {1..100}
+  printf '\nActual:\n'
+  echo "$ACTUAL_IAM"
+  printf '=%.0s' {1..100}
+  printf '\nDiff:\n'
+  diff <(echo "$EXPECTED_IAM") <(echo "$ACTUAL_IAM")
+  exit 1
+fi
+
+printf 'Testing JSON to IAM with invalid JSON... '
+
+EXPECTED_ERROR='Invalid JSON!'
+ACTUAL_ERROR=$(./src/cogito to-iam '{' 2>&1)
+
+if [ "$EXPECTED_ERROR" == "$ACTUAL_ERROR" ]; then
+  printf 'Passed.\n\n'
+else
+  echo ''
+  printf '=%.0s' {1..100}
+  printf '\nExpected:\n'
+  echo "$EXPECTED_ERROR"
+  printf '=%.0s' {1..100}
+  printf '\nActual:\n'
+  echo "$ACTUAL_ERROR"
+  printf '=%.0s' {1..100}
+  printf '\nDiff:\n'
+  diff <(echo "$EXPECTED_ERROR") <(echo "$ACTUAL_ERROR")
+  exit 1
+fi
+
+printf 'Testing JSON to IAM with invalid JSON... '
+
+EXPECTED_MSG='USAGE: cogito <to-json|to-iam> <text>'
+ACTUAL_MSG=$(./src/cogito foo 2>&1)
+
+if [ "$EXPECTED_MSG" == "$ACTUAL_MSG" ]; then
+  printf 'Passed.\n\n'
+else
+  echo ''
+  printf '=%.0s' {1..100}
+  printf '\nExpected:\n'
+  echo "$EXPECTED_MSG"
+  printf '=%.0s' {1..100}
+  printf '\nActual:\n'
+  echo "$ACTUAL_MSG"
+  printf '=%.0s' {1..100}
+  printf '\nDiff:\n'
+  diff <(echo "$EXPECTED_MSG") <(echo "$ACTUAL_MSG")
   exit 1
 fi

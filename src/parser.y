@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "linked-list.h"
 #include "statement.h"
+#include "smart_string.h"
 
 int yylex();
 void yyerror(JsonNode *json_arr, const char *str);
@@ -56,12 +57,34 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-char* cg_parse(char *input) {
+char* cg_to_json(char *input_iam) {
   JsonNode *json_arr = json_mkarray();
-  YY_BUFFER_STATE buffer = yy_scan_string(input);
+  YY_BUFFER_STATE buffer = yy_scan_string(input_iam);
   yyparse(json_arr);
   yy_delete_buffer(buffer);
   char *output = json_stringify(json_arr, "  ");
   cleanup_json_arr(json_arr);
   return output;
+}
+
+char* cg_to_iam(char *input_json) {
+  JsonNode *policies = json_decode(input_json);
+  if (policies == NULL) {
+    fprintf(stderr, "Invalid JSON!\n");
+    exit(EXIT_FAILURE);
+  }
+  JsonNode *policy;
+  SmartString *smartstring = smart_string_new();
+
+  json_foreach(policy, policies) {
+    smart_string_append(smartstring, json_to_iam(policy));
+    if (policy->next != NULL) {
+      smart_string_append(smartstring, "\n\n");
+    }
+  }
+
+  char *result = smartstring->buffer;
+  // Free the smartstring struct, but not its buffer which is stored in `result`
+  free(smartstring);
+  return result;
 }

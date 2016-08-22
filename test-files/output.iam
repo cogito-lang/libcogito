@@ -1,0 +1,20 @@
+ALLOW
+  alpha,
+  beta,
+  gamma
+ON
+  delta,
+  epsilon;
+
+DENY
+  zeta,
+  eta
+ON
+  theta,
+  iota,
+  lambda;
+
+ALLOW
+  mu
+ON
+  nu;
