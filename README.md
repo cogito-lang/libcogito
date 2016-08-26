@@ -40,7 +40,7 @@ allow s3:PutRecord on kinesis:::stream/push*;
 To get started, run:
 
 ```
-autoreconf
+autoreconf -i
 ./configure
 make
 make install
