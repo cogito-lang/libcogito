@@ -1,4 +1,4 @@
-# Cogito
+# libcogito
 
 [![Build Status](https://travis-ci.com/localytics/cogito-c.svg?token=kQUiABmGkzyHdJdMnCnv&branch=master)](https://travis-ci.com/localytics/cogito-c)
 
