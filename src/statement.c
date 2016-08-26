@@ -107,17 +107,24 @@ node_t* json_to_node(JsonNode* json) {
       }
       break;
     default:
-      fprintf(stderr, "Unknown JSON type\n");
-      exit(EXIT_FAILURE);
+      return (node_t *)NULL;
   }
   return node;
 }
 
 // Convert a JSON string to an IAM string
-char* json_to_iam(JsonNode *json) {
+response_t* json_to_iam(JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
-  JsonNode *actions = json_find_member(json, "Action");
-  JsonNode *resources = json_find_member(json, "Resource");
-  statement_t *stmt = stmt_build(macro->string_, json_to_node(actions), json_to_node(resources));
-  return stmt_to_iam(stmt);
+
+  node_t *actions = json_to_node(json_find_member(json, "Action"));
+  if (actions == NULL) {
+    return build_response(1, "Action must be a string or an array");
+  }
+
+  node_t *resources = json_to_node(json_find_member(json, "Resource"));
+  if (resources == NULL) {
+    return build_response(1, "Resource must be a string or an array");
+  }
+
+  return build_response(0, stmt_to_iam(stmt_build(macro->string_, actions, resources)));
 }

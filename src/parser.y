@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linked-list.h"
+#include "response.h"
 #include "statement.h"
 #include "smart_string.h"
 
@@ -57,27 +58,36 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-char* cg_to_json(char *input_iam) {
+response_t* cg_to_json(char *input_iam) {
   JsonNode *json_arr = json_mkarray();
   YY_BUFFER_STATE buffer = yy_scan_string(input_iam);
   yyparse(json_arr);
   yy_delete_buffer(buffer);
   char *output = json_stringify(json_arr, "  ");
   cleanup_json_arr(json_arr);
-  return output;
+  return build_response(0, output);
 }
 
-char* cg_to_iam(char *input_json) {
+response_t* cg_to_iam(char *input_json) {
   JsonNode *policies = json_decode(input_json);
+  // Handle error cases
   if (policies == NULL) {
-    fprintf(stderr, "Invalid JSON!\n");
-    exit(EXIT_FAILURE);
+    return build_response(1, "Invalid JSON");
+  } else if (policies->tag != JSON_ARRAY) {
+    return build_response(1, "JSON object must be an array");
   }
+
   JsonNode *policy;
+  response_t *converted;
   SmartString *smartstring = smart_string_new();
 
   json_foreach(policy, policies) {
-    smart_string_append(smartstring, json_to_iam(policy));
+    converted = json_to_iam(policy);
+    if (converted->status != 0) {
+      return build_response(1, converted->message);
+    }
+
+    smart_string_append(smartstring, converted->message);
     if (policy->next != NULL) {
       smart_string_append(smartstring, "\n\n");
     }
@@ -86,5 +96,5 @@ char* cg_to_iam(char *input_json) {
   char *result = smartstring->buffer;
   // Free the smartstring struct, but not its buffer which is stored in `result`
   free(smartstring);
-  return result;
+  return build_response(0, result);
 }
