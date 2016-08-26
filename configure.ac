@@ -1,7 +1,8 @@
 AC_INIT([cogito], [1.0], [oss@localytics.com])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 AM_PROG_AR
-AC_PROG_RANLIB
+LT_INIT([disable-shared])
+AC_CONFIG_MACRO_DIRS([m4])
 AC_PROG_CC
 AC_PROG_YACC
 AC_PROG_LEX
