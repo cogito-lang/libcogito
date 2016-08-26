@@ -1,6 +1,6 @@
 # libcogito
 
-[![Build Status](https://travis-ci.com/localytics/cogito-c.svg?token=kQUiABmGkzyHdJdMnCnv&branch=master)](https://travis-ci.com/localytics/cogito-c)
+[![Build Status](https://travis-ci.com/localytics/libcogito.svg?token=kQUiABmGkzyHdJdMnCnv&branch=master)](https://travis-ci.com/localytics/libcogito)
 
 Cogito allows you to define your AWS IAM policies using a smaller, easier-to-read format. By writing:
 
