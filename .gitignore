@@ -21,4 +21,7 @@ src/cogito.[co]
 src/libcogito.a
 src/parser.[ch]
 
+libtool
+ltmain.sh
+
 test-files/a.out
