@@ -7,4 +7,4 @@ AM_YFLAGS = -d
 lib_LIBRARIES = libcogito.a
 libcogito_a_SOURCES = cogito.l parser.y json.c linked-list.c statement.c smart_string.c
 include_HEADERS = cogito.h
-pkginclude_HEADERS = json.h linked-list.h statement.h parser.h
+pkginclude_HEADERS = json.h linked-list.h statement.h smart_string.h parser.h
