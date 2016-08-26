@@ -2,6 +2,7 @@ bin_PROGRAMS = cogito
 cogito_SOURCES = cogito.l parser.y json.c linked-list.c main.c response.c statement.c smart_string.c
 
 BUILT_SOURCES = parser.h
+AM_CFLAGS = -fPIC
 AM_YFLAGS = -d
 
 lib_LIBRARIES = libcogito.a
