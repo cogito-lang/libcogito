@@ -16,12 +16,17 @@ Makefile.in
 /ylwrap
 
 *.o
+*.lo
+*.la
 src/cogito
-src/cogito.[co]
+src/cogito.c
 src/libcogito.a
 src/parser.[ch]
+src/.*
 
 libtool
 ltmain.sh
 
 test-files/a.out
+
+.idea/
