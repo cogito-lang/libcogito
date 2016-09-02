@@ -1,0 +1,12 @@
+Source: libcogito
+Priority: optional
+Maintainer: Localytics <oss@localytics.com>
+Build-Depends: debhelper (>= 9), autotools-dev
+Standards-Version: 3.9.5
+Section: libs
+Homepage: <https://github.com/localytics/libcogito>
+
+Package: libcogito
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Define your AWS IAM policies using an easy-to-read format.
