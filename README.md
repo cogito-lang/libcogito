@@ -77,6 +77,11 @@ You can link again `libcogito` after it has been installed by including <cogito.
 
 ## Dependencies
 
+You need to install autoconf and automake for the `autoreconf -i` command to
+work, like so:
+
+    $ brew install autoconf automake
+
 This program depends on [GNU Bison](https://www.gnu.org/software/bison/) and [flex](http://flex.sourceforge.net/). On Mac OSX you can install them using [homebrew](http://brew.sh/) like so:
 
     $ brew install flex bison
