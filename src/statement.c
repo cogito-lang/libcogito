@@ -78,17 +78,28 @@ static void add_elements_to_iam(SmartString *smartstring, node_t *elements) {
   }
 }
 
+// Free a statement_t object
+static void stmt_free(statement_t *stmt) {
+  ll_free(stmt->actions);
+  ll_free(stmt->resources);
+  free(stmt);
+}
+
 // Convert a stmt_t to an IAM string
 char* stmt_to_iam(statement_t *stmt) {
   SmartString *smartstring = smart_string_new();
+
   add_macro_to_iam(smartstring, stmt->macro);
   add_elements_to_iam(smartstring, stmt->actions);
+
   smart_string_append(smartstring, "\nON\n");
   add_elements_to_iam(smartstring, stmt->resources);
   smart_string_append(smartstring, ";");
+
   char *iam = smartstring->buffer;
-  // Free the smartstring struct, but not its buffer which is stored in `iam`
   free(smartstring);
+  stmt_free(stmt);
+
   return iam;
 }
 

@@ -11,6 +11,7 @@ void ll_append(node_t *head, char *val) {
   ptr->next = tail;
 }
 
+// Build the first node or append a node to the list
 node_t* ll_update(node_t *head, char *val) {
   if (head == NULL) {
     return ll_build(val);
@@ -60,4 +61,16 @@ size_t ll_val_size_sum(node_t *head) {
     ptr = ptr->next;
   }
   return size;
+}
+
+// Free the memory for the entire list
+void ll_free(node_t *head) {
+  node_t *previous = head;
+  node_t *current = head;
+
+  while(current != NULL) {
+    previous = current;
+    current = current->next;
+    free(previous);
+  }
 }

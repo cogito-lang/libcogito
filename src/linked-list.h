@@ -17,5 +17,6 @@ node_t* ll_build(char *val);
 void ll_print(node_t *node);
 int ll_size(node_t *head);
 size_t ll_val_size_sum(node_t *head);
+void ll_free(node_t *head);
 
 #endif
