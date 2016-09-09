@@ -73,7 +73,7 @@ ON
 
 ## Library usage
 
-You can link again `libcogito` after it has been installed by including <cogito.h> in your C program. This will give you the functions `cg_to_json` and `cg_to_iam` which will return pointers to `response_t` structs. The structs have status and message fields that are integers and char*s respectively. If the status is 0 then the conversion succeeded and the message is the converted text. If the status is 1 then the conversion failed and the message is the error message.
+You can link against `libcogito` after it has been installed by including <cogito.h> in your C program. This will give you the functions `cg_to_json` and `cg_to_iam` which will return pointers to `response_t` structs. The structs have status and message fields that are integers and char*s respectively. If the status is 0 then the conversion succeeded and the message is the converted text. If the status is 1 then the conversion failed and the message is the error message.
 
 ## Dependencies
 
