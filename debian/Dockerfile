@@ -1,3 +1,7 @@
+# Building and running on mac:
+# docker build -t libcogito debian
+# docker run -it -v $(pwd):/data libcogito
+
 FROM debian:jessie
 MAINTAINER oss@localytics.com
 
@@ -11,7 +15,3 @@ RUN apt-get install -y --fix-missing autotools-dev flex bison
 
 WORKDIR /data
 CMD dpkg-buildpackage -us -uc && mv ../*.deb .
-
-# Building and running on mac:
-# docker build -t libcogito .
-# docker run -it -v /path/to/libcogito:/data libcogito

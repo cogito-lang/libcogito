@@ -1,6 +1,7 @@
 #include <cogito.h>
 
 int main() {
-  printf("%s\n", cg_to_json("allow a on b;"));
+  response_t* response = cg_to_json("allow a on b;");
+  printf("%s\n", response->message);
   return 0;
 }
