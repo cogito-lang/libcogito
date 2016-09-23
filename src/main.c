@@ -15,9 +15,9 @@ static void respond(response_t *response) {
 }
 
 int main(int argc, char **argv) {
-  if (strcmp(argv[1], "to-iam") == 0) {
+  if (argc > 1 && strcmp(argv[1], "to-iam") == 0) {
     respond(cg_to_iam(argv[2]));
-  } else if (strcmp(argv[1], "to-json") == 0) {
+  } else if (argc > 1 && strcmp(argv[1], "to-json") == 0) {
     respond(cg_to_json(argv[2]));
   } else {
     fail("USAGE: cogito <to-json|to-iam> <text>");
