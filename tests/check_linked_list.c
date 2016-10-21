@@ -4,22 +4,56 @@
 #include <check.h>
 #include "../src/linked_list.h"
 
-node_t *head;
-
-void setup(void)
+START_TEST(test_ll_append)
 {
-  head = ll_build("head");
-}
+  node_t *head = ll_build("head");
+  ll_append(head, "tail");
 
-void teardown(void)
-{
+  ck_assert_str_eq(head->next->val, "tail");
   ll_free(head);
 }
+END_TEST
 
-START_TEST(test_linked_list_append)
+START_TEST(test_ll_update)
 {
-  ll_append(head, "tail");
+  node_t *head = ll_update(NULL, "head");
+  ck_assert_str_eq(head->val, "head");
+  ll_update(head, "tail");
+
   ck_assert_str_eq(head->next->val, "tail");
+  ll_free(head);
+}
+END_TEST
+
+START_TEST(test_ll_build)
+{
+  node_t *head = ll_build("head");
+
+  ck_assert_str_eq(head->val, "head");
+  ll_free(head);
+}
+END_TEST
+
+START_TEST(test_ll_size)
+{
+  node_t *head = ll_build("head");
+  ll_append(head, "body1");
+  ll_append(head, "body2");
+  ll_append(head, "body3");
+
+  ck_assert_int_eq(ll_size(head), 4);
+  ll_free(head);
+}
+END_TEST
+
+START_TEST(test_ll_val_size_sum)
+{
+  node_t *head = ll_build("head");
+  ll_append(head, "this is the body");
+  ll_append(head, "tail");
+
+  ck_assert_int_eq(ll_val_size_sum(head), 24);
+  ll_free(head);
 }
 END_TEST
 
@@ -32,8 +66,11 @@ Suite * linked_list_suite(void)
   s = suite_create("Linked List");
   tc_core = tcase_create("Core");
 
-  tcase_add_checked_fixture(tc_core, setup, teardown);
-  tcase_add_test(tc_core, test_linked_list_append);
+  tcase_add_test(tc_core, test_ll_append);
+  tcase_add_test(tc_core, test_ll_update);
+  tcase_add_test(tc_core, test_ll_build);
+  tcase_add_test(tc_core, test_ll_size);
+  tcase_add_test(tc_core, test_ll_val_size_sum);
   suite_add_tcase(s, tc_core);
 
   return s;
