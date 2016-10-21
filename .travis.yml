@@ -2,8 +2,10 @@ language: c
 branches:
   only:
   - master
-before_script:
-- sudo apt-get install check
+addons:
+  apt:
+    packages:
+    - check
 script:
 - autoreconf -i
 - ./configure
