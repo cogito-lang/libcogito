@@ -11,12 +11,12 @@ typedef struct node {
   struct node *next;
 } node_t;
 
-void ll_append(node_t *head, char *val);
-node_t* ll_update(node_t *head, char *val);
-node_t* ll_build(char *val);
-void ll_print(node_t *node);
-int ll_size(node_t *head);
-size_t ll_val_size_sum(node_t *head);
-void ll_free(node_t *head);
+void cg_ll_append(node_t *head, char *val);
+node_t* cg_ll_update(node_t *head, char *val);
+node_t* cg_ll_build(char *val);
+void cg_ll_print(node_t *node);
+int cg_ll_size(node_t *head);
+size_t cg_ll_val_size_sum(node_t *head);
+void cg_ll_free(node_t *head);
 
 #endif
