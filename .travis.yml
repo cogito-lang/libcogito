@@ -2,6 +2,8 @@ language: c
 branches:
   only:
   - master
+before_script:
+- apt-get install check
 script:
 - autoreconf -i
 - ./configure
