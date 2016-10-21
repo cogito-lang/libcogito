@@ -10,4 +10,5 @@ script:
 - autoreconf -i
 - ./configure
 - make
+- make check
 - test-files/test
