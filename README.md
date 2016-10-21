@@ -89,3 +89,17 @@ This program depends on [GNU Bison](https://www.gnu.org/software/bison/) and [fl
 You may need to link them manually depending on your configuration, which you can do with:
 
     $ brew link flex --force
+
+## Testing
+
+In order to work with the tests, ensure you have `check` installed on your system:
+
+    $ brew install check
+
+Now you can run:
+
+    $ make check
+
+to run the unit tests. In order to run the integration tests, run:
+
+    $ tests/integration/test
