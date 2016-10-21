@@ -35,3 +35,10 @@ debian/debhelper.log
 debian/files
 debian/substvars
 debian/tmp/
+
+/test-driver
+/tests/.deps/
+/tests/.libs/
+/tests/*.log
+/tests/*.trs
+/tests/check_linked_list
