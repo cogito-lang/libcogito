@@ -2,8 +2,9 @@
 
 printf 'Testing IAM to JSON... '
 
-EXPECTED_JSON=$(cat test-files/output.json)
-ACTUAL_JSON=$(./src/cogito to-json "$(cat test-files/input.iam)")
+DIR="tests/integration"
+EXPECTED_JSON=$(cat $DIR/output.json)
+ACTUAL_JSON=$(./src/cogito to-json "$(cat $DIR/input.iam)")
 
 if [ "$EXPECTED_JSON" = "$ACTUAL_JSON" ]; then
   printf 'Passed.\n\n'
@@ -23,8 +24,8 @@ fi
 
 printf 'Testing JSON to IAM... '
 
-EXPECTED_IAM=$(cat test-files/output.iam)
-ACTUAL_IAM=$(./src/cogito to-iam "$(cat test-files/input.json)")
+EXPECTED_IAM=$(cat $DIR/output.iam)
+ACTUAL_IAM=$(./src/cogito to-iam "$(cat $DIR/input.json)")
 
 if [ "$EXPECTED_IAM" = "$ACTUAL_IAM" ]; then
   printf 'Passed.\n\n'
