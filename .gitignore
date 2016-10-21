@@ -37,6 +37,7 @@ Makefile.in
 /tests/*.log
 /tests/*.trs
 /tests/check_linked_list
+/tests/check_statement
 /tests/integration/a.out
 
 # Files pertaining to the debian build
