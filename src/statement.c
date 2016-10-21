@@ -80,8 +80,8 @@ static void add_elements_to_iam(SmartString *smartstring, node_t *elements) {
 
 // Free a statement_t object
 static void stmt_free(statement_t *stmt) {
-  ll_free(stmt->actions);
-  ll_free(stmt->resources);
+  cg_ll_free(stmt->actions);
+  cg_ll_free(stmt->resources);
   free(stmt);
 }
 
@@ -108,13 +108,13 @@ node_t* json_to_node(JsonNode* json) {
   node_t *node;
   switch (json->tag) {
     case JSON_STRING:
-      node = ll_build(json->string_);
+      node = cg_ll_build(json->string_);
       break;
     case JSON_ARRAY:
       node = (node_t *)NULL;
       JsonNode *element;
       json_foreach(element, json) {
-        node = ll_update(node, element->string_);
+        node = cg_ll_update(node, element->string_);
       }
       break;
     default:

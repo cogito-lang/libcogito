@@ -4,56 +4,58 @@
 #include <check.h>
 #include "../src/linked_list.h"
 
-START_TEST(test_ll_append)
+START_TEST(test_cg_ll_append)
 {
-  node_t *head = ll_build("head");
-  ll_append(head, "tail");
+  node_t *head = cg_ll_build("head");
+  cg_ll_append(head, "tail");
 
   ck_assert_str_eq(head->next->val, "tail");
-  ll_free(head);
+  cg_ll_free(head);
 }
 END_TEST
 
-START_TEST(test_ll_update)
+START_TEST(test_cg_ll_update)
 {
-  node_t *head = ll_update(NULL, "head");
+  node_t *head = cg_ll_update(NULL, "head");
   ck_assert_str_eq(head->val, "head");
-  ll_update(head, "tail");
+  cg_ll_update(head, "tail");
 
   ck_assert_str_eq(head->next->val, "tail");
-  ll_free(head);
+  cg_ll_free(head);
 }
 END_TEST
 
-START_TEST(test_ll_build)
+START_TEST(test_cg_ll_build)
 {
-  node_t *head = ll_build("head");
+  node_t *head = cg_ll_build("head");
 
   ck_assert_str_eq(head->val, "head");
-  ll_free(head);
+  cg_ll_free(head);
 }
 END_TEST
 
-START_TEST(test_ll_size)
+START_TEST(test_cg_ll_size)
 {
-  node_t *head = ll_build("head");
-  ll_append(head, "body1");
-  ll_append(head, "body2");
-  ll_append(head, "body3");
+  node_t *head = cg_ll_build("head");
+  cg_ll_append(head, "body1");
+  cg_ll_append(head, "body2");
+  cg_ll_append(head, "body3");
 
-  ck_assert_int_eq(ll_size(head), 4);
-  ll_free(head);
+  int size = cg_ll_size(head);
+  ck_assert_int_eq(size, 4);
+  cg_ll_free(head);
 }
 END_TEST
 
-START_TEST(test_ll_val_size_sum)
+START_TEST(test_cg_ll_val_size_sum)
 {
-  node_t *head = ll_build("head");
-  ll_append(head, "this is the body");
-  ll_append(head, "tail");
+  node_t *head = cg_ll_build("head");
+  cg_ll_append(head, "this is the body");
+  cg_ll_append(head, "tail");
 
-  ck_assert_int_eq(ll_val_size_sum(head), 24);
-  ll_free(head);
+  size_t sum = cg_ll_val_size_sum(head);
+  ck_assert_int_eq(sum, 24);
+  cg_ll_free(head);
 }
 END_TEST
 
@@ -66,11 +68,11 @@ Suite* linked_list_suite(void)
   s = suite_create("Linked List");
   tc_core = tcase_create("Core");
 
-  tcase_add_test(tc_core, test_ll_append);
-  tcase_add_test(tc_core, test_ll_update);
-  tcase_add_test(tc_core, test_ll_build);
-  tcase_add_test(tc_core, test_ll_size);
-  tcase_add_test(tc_core, test_ll_val_size_sum);
+  tcase_add_test(tc_core, test_cg_ll_append);
+  tcase_add_test(tc_core, test_cg_ll_update);
+  tcase_add_test(tc_core, test_cg_ll_build);
+  tcase_add_test(tc_core, test_cg_ll_size);
+  tcase_add_test(tc_core, test_cg_ll_val_size_sum);
   suite_add_tcase(s, tc_core);
 
   return s;

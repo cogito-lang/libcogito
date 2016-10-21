@@ -40,8 +40,8 @@ statement:
 ;
 
 list:
-  ITEM                      { $$ = ll_build($1); }
-  | list COMMA ITEM         { ll_append($1, $3); $$ = $1; }
+  ITEM                      { $$ = cg_ll_build($1); }
+  | list COMMA ITEM         { cg_ll_append($1, $3); $$ = $1; }
 ;
 %%
 
