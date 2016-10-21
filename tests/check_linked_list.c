@@ -57,7 +57,7 @@ START_TEST(test_ll_val_size_sum)
 }
 END_TEST
 
-Suite * linked_list_suite(void)
+Suite* linked_list_suite(void)
 {
   Suite *s;
   TCase *tc_core;
