@@ -2,8 +2,13 @@ language: c
 branches:
   only:
   - master
+addons:
+  apt:
+    packages:
+    - check
 script:
 - autoreconf -i
 - ./configure
 - make
+- make check
 - test-files/test
