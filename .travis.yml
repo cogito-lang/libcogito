@@ -11,4 +11,4 @@ script:
 - ./configure
 - make
 - make check
-- test-files/test
+- tests/integration/test
