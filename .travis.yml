@@ -7,7 +7,6 @@ addons:
     packages:
     - check
 script:
-- mkdir m4
 - autoreconf -i
 - ./configure
 - make
