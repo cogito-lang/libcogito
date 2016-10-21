@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "linked-list.h"
+#include "linked_list.h"
 #include "response.h"
 #include "statement.h"
 #include "smart_string.h"

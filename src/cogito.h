@@ -1,7 +1,7 @@
 #ifndef COGITO
 #define COGITO
 
-#include "cogito/linked-list.h"
+#include "cogito/linked_list.h"
 #include "cogito/statement.h"
 #include "cogito/parser.h"
 

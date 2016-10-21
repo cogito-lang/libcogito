@@ -1,4 +1,4 @@
-#include "linked-list.h"
+#include "linked_list.h"
 
 // Append a node to the end of the list
 void ll_append(node_t *head, char *val) {
