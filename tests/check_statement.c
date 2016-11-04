@@ -13,6 +13,8 @@ START_TEST(test_stmt_build)
   ck_assert_str_eq(statement->macro, "allow");
   ck_assert_str_eq(statement->actions->val, "s3:PutObject");
   ck_assert_str_eq(statement->resources->val, "s3:::test-bucket*/*");
+
+  stmt_free(statement);
 }
 END_TEST
 

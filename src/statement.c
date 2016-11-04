@@ -79,7 +79,7 @@ static void add_elements_to_iam(SmartString *smartstring, node_t *elements) {
 }
 
 // Free a statement_t object
-static void stmt_free(statement_t *stmt) {
+void stmt_free(statement_t *stmt) {
   cg_ll_free(stmt->actions);
   cg_ll_free(stmt->resources);
   free(stmt);
