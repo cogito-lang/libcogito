@@ -129,13 +129,13 @@ response_t* json_to_iam(JsonNode *json) {
 
   node_t *actions = json_to_node(json_find_member(json, "Action"));
   if (actions == NULL) {
-    return build_response(1, "Action must be a string or an array");
+    return cg_response_build(1, "Action must be a string or an array");
   }
 
   node_t *resources = json_to_node(json_find_member(json, "Resource"));
   if (resources == NULL) {
-    return build_response(1, "Resource must be a string or an array");
+    return cg_response_build(1, "Resource must be a string or an array");
   }
 
-  return build_response(0, stmt_to_iam(stmt_build(macro->string_, actions, resources)));
+  return cg_response_build(0, stmt_to_iam(stmt_build(macro->string_, actions, resources)));
 }
