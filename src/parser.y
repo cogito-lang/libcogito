@@ -65,16 +65,16 @@ response_t* cg_to_json(char *input_iam) {
   yy_delete_buffer(buffer);
   char *output = json_stringify(json_arr, "  ");
   cleanup_json_arr(json_arr);
-  return build_response(0, output);
+  return cg_response_build(0, output);
 }
 
 response_t* cg_to_iam(char *input_json) {
   JsonNode *policies = json_decode(input_json);
   // Handle error cases
   if (policies == NULL) {
-    return build_response(1, "Invalid JSON");
+    return cg_response_build(1, "Invalid JSON");
   } else if (policies->tag != JSON_ARRAY) {
-    return build_response(1, "JSON object must be an array");
+    return cg_response_build(1, "JSON object must be an array");
   }
 
   JsonNode *policy;
@@ -84,7 +84,7 @@ response_t* cg_to_iam(char *input_json) {
   json_foreach(policy, policies) {
     converted = json_to_iam(policy);
     if (converted->status != 0) {
-      return build_response(1, converted->message);
+      return cg_response_build(1, converted->message);
     }
 
     smart_string_append(smartstring, converted->message);
@@ -96,5 +96,5 @@ response_t* cg_to_iam(char *input_json) {
   char *result = smartstring->buffer;
   // Free the smartstring struct, but not its buffer which is stored in `result`
   free(smartstring);
-  return build_response(0, result);
+  return cg_response_build(0, result);
 }

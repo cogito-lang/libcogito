@@ -8,6 +8,7 @@ typedef struct response {
   char *message;
 } response_t;
 
-response_t* build_response(int status, char *message);
+response_t* cg_response_build(int status, char *message);
+void cg_response_free(response_t *response);
 
 #endif
