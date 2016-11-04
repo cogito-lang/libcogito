@@ -30,11 +30,10 @@ node_t* cg_ll_build(char *val) {
 
 // Print out the list starting at the given node
 void cg_ll_print(node_t *node) {
-  node_t *ptr = node;
+  node_t *ptr;
 
-  while(ptr != NULL) {
+  cg_ll_foreach(node, ptr) {
     printf("[%s]\n", ptr->val);
-    ptr = ptr->next;
   }
   printf("\n");
 }
@@ -42,11 +41,10 @@ void cg_ll_print(node_t *node) {
 // The number of nodes in the list
 int cg_ll_size(node_t *head) {
   int size = 0;
-  node_t *ptr = head;
+  node_t *ptr;
 
-  while(ptr != NULL) {
+  cg_ll_foreach(head, ptr) {
     size += 1;
-    ptr = ptr->next;
   }
   return size;
 }
@@ -54,11 +52,10 @@ int cg_ll_size(node_t *head) {
 // The sum of the size of all of the values in the list
 size_t cg_ll_val_size_sum(node_t *head) {
   size_t size = 0;
-  node_t *ptr = head;
+  node_t *ptr;
 
-  while(ptr != NULL) {
+  cg_ll_foreach(head, ptr) {
     size += strlen(ptr->val);
-    ptr = ptr->next;
   }
   return size;
 }

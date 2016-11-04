@@ -11,6 +11,9 @@ typedef struct node {
   struct node *next;
 } node_t;
 
+#define cg_ll_foreach(head, ptr) \
+  for ((ptr) = head; (ptr) != NULL; (ptr) = (ptr)->next)
+
 void cg_ll_append(node_t *head, char *val);
 node_t* cg_ll_update(node_t *head, char *val);
 node_t* cg_ll_build(char *val);
