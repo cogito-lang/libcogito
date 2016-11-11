@@ -2,16 +2,20 @@
 
 #define COGITO_BUF_INCR 256
 
-cg_buf_t* cg_buf_build() {
+cg_buf_t* cg_buf_build(const char *str) {
   cg_buf_t *buffer = (cg_buf_t*) malloc(sizeof(cg_buf_t));
+
   buffer->length = 0;
   buffer->capacity = COGITO_BUF_INCR;
+
   buffer->content = (char *) malloc(buffer->capacity);
   buffer->content[0] = '\0';
+
+  cg_buf_append(buffer, str);
   return buffer;
 }
 
-void cg_buf_append(cg_buf_t *buffer, char *str) {
+void cg_buf_append(cg_buf_t *buffer, const char *str) {
   size_t str_len = strlen(str);
   if (str_len == 0) {
     return;
