@@ -17,7 +17,7 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 
 %union {
   char *str;
-  node_t *node;
+  cg_node_t *node;
   statement_t *stmt;
 }
 
