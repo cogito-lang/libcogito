@@ -22,12 +22,12 @@ cg_buf_t* cg_buf_build(void) {
 }
 
 int cg_buf_append(cg_buf_t *buffer, const char *str) {
-  size_t str_len = strlen(str);
-  if (str_len == 0) {
+  size_t append_len = strlen(str);
+  if (append_len == 0) {
     return 0;
   }
 
-  size_t new_length = buffer->length + str_len;
+  size_t new_length = buffer->length + append_len;
   while (new_length >= buffer->capacity) {
     buffer->capacity += COGITO_BUF_INCR;
     buffer->content = (char *) realloc(buffer->content, buffer->capacity);
@@ -37,7 +37,7 @@ int cg_buf_append(cg_buf_t *buffer, const char *str) {
   }
 
   size_t idx;
-  for (idx = 0; idx < str_len; idx++) {
+  for (idx = 0; idx < append_len; idx++) {
     buffer->content[buffer->length++] = str[idx];
   }
   buffer->content[buffer->length] = '\0';
