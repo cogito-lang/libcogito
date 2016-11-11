@@ -10,12 +10,12 @@
 
 typedef struct statement {
   char *macro;
-  node_t *actions;
-  node_t *resources;
+  cg_node_t *actions;
+  cg_node_t *resources;
 } statement_t;
 
 void stmt_free(statement_t *stmt);
-statement_t* stmt_build(char *macro, node_t *actions, node_t *resources);
+statement_t* stmt_build(char *macro, cg_node_t *actions, cg_node_t *resources);
 JsonNode* stmt_to_json(statement_t *stmt);
 response_t* json_to_iam(JsonNode *json);
 

@@ -6,8 +6,8 @@
 
 START_TEST(test_stmt_build)
 {
-  node_t *actions = cg_ll_build("s3:PutObject");
-  node_t *resources = cg_ll_build("s3:::test-bucket*/*");
+  cg_node_t *actions = cg_ll_build("s3:PutObject");
+  cg_node_t *resources = cg_ll_build("s3:::test-bucket*/*");
   statement_t *statement = stmt_build("allow", actions, resources);
 
   ck_assert_str_eq(statement->macro, "allow");
