@@ -10,7 +10,7 @@ typedef struct cg_buf {
   char *content;
 } cg_buf_t;
 
-cg_buf_t* cg_buf_build(const char *str);
+cg_buf_t* cg_buf_build(void);
 void cg_buf_append(cg_buf_t *buffer, const char *str);
 void cg_buf_free(cg_buf_t *buffer);
 

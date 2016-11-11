@@ -6,11 +6,11 @@
 
 START_TEST(test_cg_buf_build)
 {
-  cg_buf_t *buffer = cg_buf_build("foobar");
+  cg_buf_t *buffer = cg_buf_build();
 
-  ck_assert_int_eq(buffer->length, 6);
+  ck_assert_int_eq(buffer->length, 0);
   ck_assert_int_eq(buffer->capacity, 256);
-  ck_assert_str_eq(buffer->content, "foobar");
+  ck_assert_str_eq(buffer->content, "");
 
   cg_buf_free(buffer);
 }
@@ -18,8 +18,8 @@ END_TEST
 
 START_TEST(test_cg_buf_append)
 {
-  cg_buf_t *buffer = cg_buf_build("foo");
-  cg_buf_append(buffer, "bar");
+  cg_buf_t *buffer = cg_buf_build();
+  cg_buf_append(buffer, "foobar");
 
   ck_assert_int_eq(buffer->length, 6);
   ck_assert_str_eq(buffer->content, "foobar");
@@ -30,7 +30,9 @@ END_TEST
 
 START_TEST(test_cg_buf_append_increase)
 {
-  cg_buf_t *buffer = cg_buf_build("foobar");
+  cg_buf_t *buffer = cg_buf_build();
+  cg_buf_append(buffer, "foobar");
+
   char *addition = "0123456789";
   int idx;
 

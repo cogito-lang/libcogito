@@ -2,7 +2,7 @@
 
 #define COGITO_BUF_INCR 256
 
-cg_buf_t* cg_buf_build(const char *str) {
+cg_buf_t* cg_buf_build(void) {
   cg_buf_t *buffer = (cg_buf_t*) malloc(sizeof(cg_buf_t));
 
   buffer->length = 0;
@@ -11,7 +11,6 @@ cg_buf_t* cg_buf_build(const char *str) {
   buffer->content = (char *) malloc(buffer->capacity);
   buffer->content[0] = '\0';
 
-  cg_buf_append(buffer, str);
   return buffer;
 }
 
