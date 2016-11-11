@@ -1,9 +1,9 @@
 #include "linked_list.h"
 
 // Append a node to the end of the list
-void cg_ll_append(node_t *head, char *val) {
-  node_t *tail = cg_ll_build(val);
-  node_t *ptr = head;
+void cg_ll_append(cg_node_t *head, char *val) {
+  cg_node_t *tail = cg_ll_build(val);
+  cg_node_t *ptr = head;
 
   while(ptr->next != NULL) {
     ptr = ptr->next;
@@ -12,7 +12,7 @@ void cg_ll_append(node_t *head, char *val) {
 }
 
 // Build the first node or append a node to the list
-node_t* cg_ll_update(node_t *head, char *val) {
+cg_node_t* cg_ll_update(cg_node_t *head, char *val) {
   if (head == NULL) {
     return cg_ll_build(val);
   }
@@ -21,16 +21,16 @@ node_t* cg_ll_update(node_t *head, char *val) {
 }
 
 // Build a list node
-node_t* cg_ll_build(char *val) {
-  node_t *node = (node_t*) malloc(sizeof(node_t));
+cg_node_t* cg_ll_build(char *val) {
+  cg_node_t *node = (cg_node_t*) malloc(sizeof(cg_node_t));
   node->val = val;
   node->next = NULL;
   return node;
 }
 
 // Print out the list starting at the given node
-void cg_ll_print(node_t *node) {
-  node_t *ptr = node;
+void cg_ll_print(cg_node_t *node) {
+  cg_node_t *ptr = node;
 
   while(ptr != NULL) {
     printf("[%s]\n", ptr->val);
@@ -40,9 +40,9 @@ void cg_ll_print(node_t *node) {
 }
 
 // The number of nodes in the list
-int cg_ll_size(node_t *head) {
+int cg_ll_size(cg_node_t *head) {
   int size = 0;
-  node_t *ptr = head;
+  cg_node_t *ptr = head;
 
   while(ptr != NULL) {
     size += 1;
@@ -52,9 +52,9 @@ int cg_ll_size(node_t *head) {
 }
 
 // The sum of the size of all of the values in the list
-size_t cg_ll_val_size_sum(node_t *head) {
+size_t cg_ll_val_size_sum(cg_node_t *head) {
   size_t size = 0;
-  node_t *ptr = head;
+  cg_node_t *ptr = head;
 
   while(ptr != NULL) {
     size += strlen(ptr->val);
@@ -64,9 +64,9 @@ size_t cg_ll_val_size_sum(node_t *head) {
 }
 
 // Free the memory for the entire list
-void cg_ll_free(node_t *head) {
-  node_t *previous = head;
-  node_t *current = head;
+void cg_ll_free(cg_node_t *head) {
+  cg_node_t *previous = head;
+  cg_node_t *current = head;
 
   while(current != NULL) {
     previous = current;

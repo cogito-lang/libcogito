@@ -6,7 +6,7 @@
 
 START_TEST(test_cg_ll_append)
 {
-  node_t *head = cg_ll_build("head");
+  cg_node_t *head = cg_ll_build("head");
   cg_ll_append(head, "tail");
 
   ck_assert_str_eq(head->next->val, "tail");
@@ -16,7 +16,7 @@ END_TEST
 
 START_TEST(test_cg_ll_update)
 {
-  node_t *head = cg_ll_update(NULL, "head");
+  cg_node_t *head = cg_ll_update(NULL, "head");
   ck_assert_str_eq(head->val, "head");
   cg_ll_update(head, "tail");
 
@@ -27,7 +27,7 @@ END_TEST
 
 START_TEST(test_cg_ll_build)
 {
-  node_t *head = cg_ll_build("head");
+  cg_node_t *head = cg_ll_build("head");
 
   ck_assert_str_eq(head->val, "head");
   cg_ll_free(head);
@@ -36,7 +36,7 @@ END_TEST
 
 START_TEST(test_cg_ll_size)
 {
-  node_t *head = cg_ll_build("head");
+  cg_node_t *head = cg_ll_build("head");
   cg_ll_append(head, "body1");
   cg_ll_append(head, "body2");
   cg_ll_append(head, "body3");
@@ -49,7 +49,7 @@ END_TEST
 
 START_TEST(test_cg_ll_val_size_sum)
 {
-  node_t *head = cg_ll_build("head");
+  cg_node_t *head = cg_ll_build("head");
   cg_ll_append(head, "this is the body");
   cg_ll_append(head, "tail");
 
