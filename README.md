@@ -103,3 +103,7 @@ Now you can run:
 to run the unit tests. In order to run the integration tests, run:
 
     $ tests/integration/test
+
+## Credits
+
+The [CCAN](https://ccodearchive.net/) JSON library is used by libcogito uses for parsing and generating JSON.
