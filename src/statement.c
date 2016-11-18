@@ -61,18 +61,21 @@ JsonNode* stmt_to_json(statement_t *stmt) {
 }
 
 // Add the statement macro to the IAM string buffer
-static void add_macro_to_iam(SmartString *smartstring, char *macro) {
+static void add_macro_to_iam(cg_buf_t *buffer, char *macro) {
   capitalize_str(macro);
-  smart_string_append_sprintf(smartstring, "%s\n", macro);
+  cg_buf_append(buffer, macro);
+  cg_buf_append(buffer, "\n");
 }
 
 // Add a list of statement elements to the IAM string buffer
-static void add_elements_to_iam(SmartString *smartstring, cg_node_t *elements) {
+static void add_elements_to_iam(cg_buf_t *buffer, cg_node_t *elements) {
   cg_node_t *ptr = elements;
   while (ptr != NULL) {
-    smart_string_append_sprintf(smartstring, "  %s", ptr->val);
+    cg_buf_append(buffer, "  ");
+    cg_buf_append(buffer, ptr->val);
+
     if (ptr->next != NULL) {
-      smart_string_append(smartstring, ",\n");
+      cg_buf_append(buffer, ",\n");
     }
     ptr = ptr->next;
   }
@@ -87,17 +90,17 @@ void stmt_free(statement_t *stmt) {
 
 // Convert a stmt_t to an IAM string
 char* stmt_to_iam(statement_t *stmt) {
-  SmartString *smartstring = smart_string_new();
+  cg_buf_t *buffer = cg_buf_build();
 
-  add_macro_to_iam(smartstring, stmt->macro);
-  add_elements_to_iam(smartstring, stmt->actions);
+  add_macro_to_iam(buffer, stmt->macro);
+  add_elements_to_iam(buffer, stmt->actions);
 
-  smart_string_append(smartstring, "\nON\n");
-  add_elements_to_iam(smartstring, stmt->resources);
-  smart_string_append(smartstring, ";");
+  cg_buf_append(buffer, "\nON\n");
+  add_elements_to_iam(buffer, stmt->resources);
+  cg_buf_append(buffer, ";");
 
-  char *iam = smartstring->buffer;
-  free(smartstring);
+  char *iam = buffer->content;
+  free(buffer);
   stmt_free(stmt);
 
   return iam;
@@ -124,7 +127,7 @@ cg_node_t* json_to_node(JsonNode* json) {
 }
 
 // Convert a JSON string to an IAM string
-response_t* json_to_iam(JsonNode *json) {
+char* json_to_iam(JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
 
   cg_node_t *actions = json_to_node(json_find_member(json, "Action"));
@@ -137,5 +140,5 @@ response_t* json_to_iam(JsonNode *json) {
     return cg_response_build(1, "Resource must be a string or an array");
   }
 
-  return cg_response_build(0, stmt_to_iam(stmt_build(macro->string_, actions, resources)));
+  return stmt_to_iam(stmt_build(macro->string_, actions, resources));
 }

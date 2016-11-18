@@ -1,10 +1,14 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "buffer.h"
 #include "linked_list.h"
 #include "response.h"
 #include "statement.h"
-#include "smart_string.h"
+
+const int CG_ERR_INVALID_IAM = 1;
+const int CG_ERR_INVALID_JSON = 2;
+const int CG_ERR_JSON_NOT_ARRAY = 3;
 
 int yylex();
 void yyerror(JsonNode *json_arr, const char *str);
@@ -58,48 +62,42 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-//response_t* cg_to_json(char *input_iam) {
 int cg_to_json(cg_buf_t *buffer, char *input) {
   JsonNode *json_arr = json_mkarray();
-  YY_BUFFER_STATE buffer = yy_scan_string(input);
+  YY_BUFFER_STATE yy_buffer = yy_scan_string(input);
   yyparse(json_arr);
-  yy_delete_buffer(buffer);
+  yy_delete_buffer(yy_buffer);
+
   char *output = json_stringify(json_arr, "  ");
   cleanup_json_arr(json_arr);
-  int rc = cg_buf_append(buffer, output);
+  int response_code = cg_buf_append(buffer, output);
   free(output);
-  return rc ? 1 : 0;
+
+  return response_code ? CG_ERR_INVALID_IAM : 0;
 }
 
-//response_t* cg_to_iam(char *input_json) {
 int cg_to_iam(cg_buf_t *buffer, char *input) {
-  JsonNode *policies = json_decode(input_json);
-  // Handle error cases
+  JsonNode *policies = json_decode(input);
+
   if (policies == NULL) {
-    
-    return cg_response_build(1, "Invalid JSON");
+    return CG_ERR_INVALID_JSON;
   } else if (policies->tag != JSON_ARRAY) {
-    return cg_response_build(1, "JSON object must be an array");
+    return CG_ERR_JSON_NOT_ARRAY;
   }
 
   JsonNode *policy;
-  response_t *converted;
-  SmartString *smartstring = smart_string_new();
+  char *converted;
 
   json_foreach(policy, policies) {
     converted = json_to_iam(policy);
-    if (converted->status != 0) {
-      return cg_response_build(1, converted->message);
-    }
+    cg_buf_append(buffer, converted);
+    free(converted);
 
-    smart_string_append(smartstring, converted->message);
     if (policy->next != NULL) {
-      smart_string_append(smartstring, "\n\n");
+      cg_buf_append(buffer, "\n\n");
     }
   }
 
-  char *result = smartstring->buffer;
-  // Free the smartstring struct, but not its buffer which is stored in `result`
-  free(smartstring);
-  return cg_response_build(0, result);
+  cleanup_json_arr(policies);
+  return 0;
 }
