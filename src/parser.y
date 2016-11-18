@@ -58,20 +58,25 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-response_t* cg_to_json(char *input_iam) {
+//response_t* cg_to_json(char *input_iam) {
+int cg_to_json(cg_buf_t *buffer, char *input) {
   JsonNode *json_arr = json_mkarray();
-  YY_BUFFER_STATE buffer = yy_scan_string(input_iam);
+  YY_BUFFER_STATE buffer = yy_scan_string(input);
   yyparse(json_arr);
   yy_delete_buffer(buffer);
   char *output = json_stringify(json_arr, "  ");
   cleanup_json_arr(json_arr);
-  return cg_response_build(0, output);
+  int rc = cg_buf_append(buffer, output);
+  free(output);
+  return rc ? 1 : 0;
 }
 
-response_t* cg_to_iam(char *input_json) {
+//response_t* cg_to_iam(char *input_json) {
+int cg_to_iam(cg_buf_t *buffer, char *input) {
   JsonNode *policies = json_decode(input_json);
   // Handle error cases
   if (policies == NULL) {
+    
     return cg_response_build(1, "Invalid JSON");
   } else if (policies->tag != JSON_ARRAY) {
     return cg_response_build(1, "JSON object must be an array");
