@@ -17,6 +17,12 @@ static void process(int response) {
     case 3:
       message = "JSON must be an array";
       break;
+    case 4:
+      message = "Action must be a string or an array";
+      break;
+    case 5:
+      message = "Resource must be a string or an array";
+      break;
   }
   fprintf(stderr, "%s\n", message);
 }

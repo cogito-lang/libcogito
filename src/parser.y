@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "buffer.h"
 #include "linked_list.h"
-#include "response.h"
 #include "statement.h"
 
 const int CG_ERR_INVALID_IAM = 1;
@@ -86,13 +85,12 @@ int cg_to_iam(cg_buf_t *buffer, char *input) {
   }
 
   JsonNode *policy;
-  char *converted;
+  int response_code;
 
   json_foreach(policy, policies) {
-    converted = json_to_iam(policy);
-    cg_buf_append(buffer, converted);
-    free(converted);
-
+    if (!(response_code = cg_append_json_policy(buffer, policy))) {
+      return response_code;
+    }
     if (policy->next != NULL) {
       cg_buf_append(buffer, "\n\n");
     }
