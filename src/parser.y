@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "buffer.h"
 #include "linked_list.h"
 #include "statement.h"
