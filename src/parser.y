@@ -3,12 +3,9 @@
 #include <stdlib.h>
 
 #include "buffer.h"
+#include "errors.h"
 #include "linked_list.h"
 #include "statement.h"
-
-const int CG_ERR_INVALID_IAM = 1;
-const int CG_ERR_INVALID_JSON = 2;
-const int CG_ERR_JSON_NOT_ARRAY = 3;
 
 int yylex();
 void yyerror(JsonNode *json_arr, const char *str);

@@ -1,0 +1,10 @@
+#ifndef COGITO_ERR
+#define COGITO_ERR
+
+#define CG_ERR_INVALID_IAM 1
+#define CG_ERR_INVALID_JSON 2
+#define CG_ERR_JSON_NOT_ARRAY 3
+#define CG_ERR_INVALID_ACTION 4
+#define CG_ERR_INVALID_RESOURCE 5
+
+#endif

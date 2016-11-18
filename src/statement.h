@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "buffer.h"
+#include "errors.h"
 #include "json.h"
 #include "linked_list.h"
 

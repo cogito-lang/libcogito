@@ -2,25 +2,27 @@
 #include <stdlib.h>
 #include "bin-cogito.h"
 
+#define CG_ERR_USAGE -1
+
 static void process(int response) {
   char *message;
   switch (response) {
-    case -1:
+    case CG_ERR_USAGE:
       message = "USAGE: cogito <to-json|to-iam> <text>";
       break;
-    case 1:
+    case CG_ERR_INVALID_IAM:
       message = "Invalid IAM syntax";
       break;
-    case 2:
+    case CG_ERR_INVALID_JSON:
       message = "Invalid JSON syntax";
       break;
-    case 3:
+    case CG_ERR_JSON_NOT_ARRAY:
       message = "JSON must be an array";
       break;
-    case 4:
+    case CG_ERR_INVALID_ACTION:
       message = "Action must be a string or an array";
       break;
-    case 5:
+    case CG_ERR_INVALID_RESOURCE:
       message = "Resource must be a string or an array";
       break;
   }
@@ -36,7 +38,7 @@ int main(int argc, char **argv) {
   } else if (argc > 1 && strcmp(argv[1], "to-json") == 0) {
     response = cg_to_json(buffer, argv[2]);
   } else {
-    response = -1;
+    response = CG_ERR_USAGE;
   }
 
   if (response) {

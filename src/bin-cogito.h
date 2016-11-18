@@ -2,6 +2,7 @@
 #define COGITO
 
 #include "src/buffer.h"
+#include "src/errors.h"
 #include "src/linked_list.h"
 #include "src/statement.h"
 #include "src/parser.h"

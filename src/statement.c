@@ -126,10 +126,10 @@ int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   cg_node_t *actions, *resources;
 
   if ((actions = json_to_node(json_find_member(json, "Action"))) == NULL) {
-    return 4;
+    return CG_ERR_INVALID_ACTION;
   }
   if ((resources = json_to_node(json_find_member(json, "Resource"))) == NULL) {
-    return 5;
+    return CG_ERR_INVALID_RESOURCE;
   }
 
   char *iam = stmt_to_iam(stmt_build(macro->string_, actions, resources));
