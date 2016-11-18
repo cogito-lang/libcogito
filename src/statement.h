@@ -8,7 +8,6 @@
 #include "json.h"
 #include "linked_list.h"
 #include "response.h"
-#include "smart_string.h"
 
 typedef struct statement {
   char *macro;
