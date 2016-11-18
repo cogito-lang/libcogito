@@ -2,25 +2,49 @@
 #include <stdlib.h>
 #include "bin-cogito.h"
 
-static void fail(char *message) {
-  fprintf(stderr, "%s\n", message);
-  exit(EXIT_FAILURE);
-};
+#define CG_ERR_USAGE -1
 
-static void respond(response_t *response) {
-  if (response->status != 0) {
-    fail(response->message);
+static void process(int response) {
+  char *message;
+  switch (response) {
+    case CG_ERR_USAGE:
+      message = "USAGE: cogito <to-json|to-iam> <text>";
+      break;
+    case CG_ERR_INVALID_IAM:
+      message = "Invalid IAM syntax";
+      break;
+    case CG_ERR_INVALID_JSON:
+      message = "Invalid JSON syntax";
+      break;
+    case CG_ERR_JSON_NOT_ARRAY:
+      message = "JSON must be an array";
+      break;
+    case CG_ERR_INVALID_ACTION:
+      message = "Action must be a string or an array";
+      break;
+    case CG_ERR_INVALID_RESOURCE:
+      message = "Resource must be a string or an array";
+      break;
   }
-  printf("%s\n", response->message);
+  fprintf(stderr, "%s\n", message);
 }
 
 int main(int argc, char **argv) {
+  cg_buf_t *buffer = cg_buf_build();
+  int response;
+
   if (argc > 1 && strcmp(argv[1], "to-iam") == 0) {
-    respond(cg_to_iam(argv[2]));
+    response = cg_to_iam(buffer, argv[2]);
   } else if (argc > 1 && strcmp(argv[1], "to-json") == 0) {
-    respond(cg_to_json(argv[2]));
+    response = cg_to_json(buffer, argv[2]);
   } else {
-    fail("USAGE: cogito <to-json|to-iam> <text>");
+    response = CG_ERR_USAGE;
   }
-  return 0;
+
+  if (response) {
+    process(response);
+  } else {
+    printf("%s\n", buffer->content);
+  }
+  return response;
 }

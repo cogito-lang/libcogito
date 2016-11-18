@@ -10,21 +10,6 @@ static void format_macro(char *macro) {
   }
 }
 
-static void capitalize_str(char *str) {
-  int idx;
-  int len = strlen(str);
-
-  for (idx = 0; idx < len; idx++) {
-    str[idx] = toupper(str[idx]);
-  }
-}
-
-// Add the statement macro to the JSON object
-static void add_statement_macro(char *macro, JsonNode *json) {
-  format_macro(macro);
-  json_append_member(json, "Effect", json_mkstring(macro));
-}
-
 // Add elements to a JSON array
 static void add_elements_to_array(cg_node_t *head, JsonNode *array) {
   cg_node_t *ptr = head;
@@ -54,25 +39,37 @@ statement_t* stmt_build(char *macro, cg_node_t *actions, cg_node_t *resources) {
 // Converts a given statement object to a JsonNode object
 JsonNode* stmt_to_json(statement_t *stmt) {
   JsonNode *json = json_mkobject();
-  add_statement_macro(stmt->macro, json);
+
+  format_macro(stmt->macro);
+  json_append_member(json, "Effect", json_mkstring(stmt->macro));
+
   add_statement_elements(stmt->actions, json, "Action");
   add_statement_elements(stmt->resources, json, "Resource");
   return json;
 }
 
 // Add the statement macro to the IAM string buffer
-static void add_macro_to_iam(SmartString *smartstring, char *macro) {
-  capitalize_str(macro);
-  smart_string_append_sprintf(smartstring, "%s\n", macro);
+static void add_macro_to_iam(cg_buf_t *buffer, char *macro) {
+  int idx;
+  int len = strlen(macro);
+
+  for (idx = 0; idx < len; idx++) {
+    macro[idx] = toupper(macro[idx]);
+  }
+
+  cg_buf_append(buffer, macro);
+  cg_buf_append(buffer, "\n");
 }
 
 // Add a list of statement elements to the IAM string buffer
-static void add_elements_to_iam(SmartString *smartstring, cg_node_t *elements) {
+static void add_elements_to_iam(cg_buf_t *buffer, cg_node_t *elements) {
   cg_node_t *ptr = elements;
   while (ptr != NULL) {
-    smart_string_append_sprintf(smartstring, "  %s", ptr->val);
+    cg_buf_append(buffer, "  ");
+    cg_buf_append(buffer, ptr->val);
+
     if (ptr->next != NULL) {
-      smart_string_append(smartstring, ",\n");
+      cg_buf_append(buffer, ",\n");
     }
     ptr = ptr->next;
   }
@@ -87,17 +84,17 @@ void stmt_free(statement_t *stmt) {
 
 // Convert a stmt_t to an IAM string
 char* stmt_to_iam(statement_t *stmt) {
-  SmartString *smartstring = smart_string_new();
+  cg_buf_t *buffer = cg_buf_build();
 
-  add_macro_to_iam(smartstring, stmt->macro);
-  add_elements_to_iam(smartstring, stmt->actions);
+  add_macro_to_iam(buffer, stmt->macro);
+  add_elements_to_iam(buffer, stmt->actions);
 
-  smart_string_append(smartstring, "\nON\n");
-  add_elements_to_iam(smartstring, stmt->resources);
-  smart_string_append(smartstring, ";");
+  cg_buf_append(buffer, "\nON\n");
+  add_elements_to_iam(buffer, stmt->resources);
+  cg_buf_append(buffer, ";");
 
-  char *iam = smartstring->buffer;
-  free(smartstring);
+  char *iam = buffer->content;
+  free(buffer);
   stmt_free(stmt);
 
   return iam;
@@ -123,19 +120,21 @@ cg_node_t* json_to_node(JsonNode* json) {
   return node;
 }
 
-// Convert a JSON string to an IAM string
-response_t* json_to_iam(JsonNode *json) {
+// Append a JSON policy to a buffer
+int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
+  cg_node_t *actions, *resources;
 
-  cg_node_t *actions = json_to_node(json_find_member(json, "Action"));
-  if (actions == NULL) {
-    return cg_response_build(1, "Action must be a string or an array");
+  if ((actions = json_to_node(json_find_member(json, "Action"))) == NULL) {
+    return CG_ERR_INVALID_ACTION;
+  }
+  if ((resources = json_to_node(json_find_member(json, "Resource"))) == NULL) {
+    return CG_ERR_INVALID_RESOURCE;
   }
 
-  cg_node_t *resources = json_to_node(json_find_member(json, "Resource"));
-  if (resources == NULL) {
-    return cg_response_build(1, "Resource must be a string or an array");
-  }
+  char *iam = stmt_to_iam(stmt_build(macro->string_, actions, resources));
+  int response_code = cg_buf_append(buffer, iam);
+  free(iam);
 
-  return cg_response_build(0, stmt_to_iam(stmt_build(macro->string_, actions, resources)));
+  return response_code;
 }

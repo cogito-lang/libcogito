@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "buffer.h"
+#include "errors.h"
 #include "json.h"
 #include "linked_list.h"
-#include "response.h"
-#include "smart_string.h"
 
 typedef struct statement {
   char *macro;
@@ -17,6 +18,6 @@ typedef struct statement {
 void stmt_free(statement_t *stmt);
 statement_t* stmt_build(char *macro, cg_node_t *actions, cg_node_t *resources);
 JsonNode* stmt_to_json(statement_t *stmt);
-response_t* json_to_iam(JsonNode *json);
+int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json);
 
 #endif
