@@ -1,6 +1,6 @@
 #include "buffer.h"
 
-#define COGITO_BUF_INCR 256
+#define COGITO_BUF_INCR sysconf(_SC_PAGESIZE)
 
 cg_buf_t* cg_buf_build(void) {
   cg_buf_t *buffer = (cg_buf_t*) malloc(sizeof(cg_buf_t));
