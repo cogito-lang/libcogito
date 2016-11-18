@@ -45,7 +45,7 @@ fi
 
 printf 'Testing JSON to IAM with invalid JSON... '
 
-EXPECTED_ERROR='Invalid JSON'
+EXPECTED_ERROR='Invalid JSON syntax'
 ACTUAL_ERROR=$(./src/cogito to-iam '{' 2>&1)
 
 if [ "$EXPECTED_ERROR" == "$ACTUAL_ERROR" ]; then

@@ -86,7 +86,7 @@ int cg_to_iam(cg_buf_t *buffer, char *input) {
   int response_code;
 
   json_foreach(policy, policies) {
-    if (!(response_code = cg_append_json_policy(buffer, policy))) {
+    if ((response_code = cg_append_json_policy(buffer, policy)) != 0) {
       return response_code;
     }
     if (policy->next != NULL) {
