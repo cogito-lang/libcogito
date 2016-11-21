@@ -2,12 +2,12 @@
 
 // Capitalize the macro string
 static void format_macro(char *macro) {
-  int idx;
-  int macro_len = strlen(macro);
-
-  for (idx = 0; idx < macro_len; idx++) {
-    macro[idx] = (idx == 0) ? toupper(macro[idx]) : tolower(macro[idx]);
-  }
+    char *ptr = macro;
+    if (*ptr != '\0') *ptr = toupper(*ptr);
+            
+    while (*(++ptr) != '\0') {
+        *ptr = tolower(*ptr);
+    }
 }
 
 // Add elements to a JSON array

@@ -31,7 +31,7 @@
 
 #define out_of_memory() do {                    \
 		fprintf(stderr, "Out of memory.\n");    \
-		exit(EXIT_FAILURE);                     \
+		exit(EXIT_FAILURE); /* WTF my library just called exit() */                    \
 	} while (0)
 
 /* Sadly, strdup is not portable. */

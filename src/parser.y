@@ -14,6 +14,8 @@ typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern int yyparse();
 extern YY_BUFFER_STATE yy_scan_string(char *str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
+
+static void cleanup_statement_allocs(statement_t *stmt);
 %}
 
 %union {
@@ -30,10 +32,28 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 %type <node> list
 %type <stmt> statement
 
+
+%destructor { free($$); } MACRO ITEM
+%destructor { 
+    cg_node_t *ptr;
+    cg_ll_foreach($$, ptr) {
+        free(ptr->val);
+    }
+    cg_ll_free($$);
+} list
+%destructor { 
+    cleanup_statement_allocs($$);
+    stmt_free($$); 
+} statement
+
 %%
 input:
   /* empty */
-  | input statement { json_append_element(json_arr, stmt_to_json($2)); }
+  | input statement { 
+    json_append_element(json_arr, stmt_to_json($2)); 
+    cleanup_statement_allocs($2);
+    stmt_free($2);
+}
 ;
 
 statement:
@@ -57,6 +77,18 @@ static void cleanup_json_arr(JsonNode *json_arr) {
     json_obj = json_obj->next;
   }
   json_delete(json_arr);
+}
+
+static void cleanup_statement_allocs(statement_t *stmt) {
+    cg_node_t *ptr;
+  
+    cg_ll_foreach(stmt->actions, ptr) {
+      free(ptr->val);
+    }
+  
+    cg_ll_foreach(stmt->resources, ptr) {
+      free(ptr->val);
+    }
 }
 
 int cg_to_json(cg_buf_t *buffer, char *input) {
