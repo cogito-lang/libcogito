@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+CHECK_CFLAGS=' ' CHECK_LIBS=' ' ./configure
+make
+make dist
+
+mkdir -p /root/rpmbuild/SOURCES/
+mv cogito-*.tar.gz /root/rpmbuild/SOURCES/
+rpmbuild -ba amazon/cogito.spec
+mv /root/rpmbuild/SRPMS/cogito-*.rpm .

@@ -7,3 +7,5 @@ RUN yum install -y autoconf automake libtool check
 RUN yum install -y bison flex
 
 WORKDIR /data
+ADD build /bin/cogito-build
+CMD /bin/cogito-build
