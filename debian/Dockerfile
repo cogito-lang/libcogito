@@ -14,4 +14,4 @@ RUN apt-get install -y --fix-missing dh-make
 RUN apt-get install -y --fix-missing autotools-dev flex bison
 
 WORKDIR /data
-CMD dpkg-buildpackage -us -uc && mv ../*.deb .
+CMD dpkg-buildpackage -us -uc && mv ../*.deb pkg/
