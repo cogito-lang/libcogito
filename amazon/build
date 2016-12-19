@@ -7,4 +7,5 @@ make dist
 mkdir -p /root/rpmbuild/SOURCES/
 mv cogito-*.tar.gz /root/rpmbuild/SOURCES/
 rpmbuild -ba amazon/cogito.spec
+mkdir -p pkg/
 mv /root/rpmbuild/SRPMS/cogito-*.rpm pkg/
