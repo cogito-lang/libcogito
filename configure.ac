@@ -1,4 +1,4 @@
-AC_INIT([cogito], [1.0], [oss@localytics.com])
+AC_INIT([cogito], [0.0.1], [oss@localytics.com])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])

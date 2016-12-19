@@ -46,3 +46,6 @@ Makefile.in
 /debian/files
 /debian/substvars
 /debian/tmp/
+
+# Built packages
+/pkg/
