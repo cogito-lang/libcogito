@@ -1,4 +1,4 @@
-Name:     cogito
+Name:     libcogito
 Version:  0.0.1
 Release:  1
 Summary:  Define your AWS IAM policies using an easy-to-read format.

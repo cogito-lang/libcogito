@@ -5,7 +5,9 @@ make
 make dist
 
 mkdir -p /root/rpmbuild/SOURCES/
-mv cogito-*.tar.gz /root/rpmbuild/SOURCES/
-rpmbuild -ba amazon/cogito.spec
+FILENAME="$(ls cogito-*.tar.gz)"
+mv "$FILENAME" "/root/rpmbuild/SOURCES/lib$FILENAME"
+
+rpmbuild -ba amazon/libcogito.spec
 mkdir -p pkg/
-mv /root/rpmbuild/SRPMS/cogito-*.rpm pkg/
+mv /root/rpmbuild/SRPMS/libcogito-*.rpm pkg/
