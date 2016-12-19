@@ -1,10 +1,10 @@
 FROM amazonlinux:latest
 MAINTAINER oss@localytics.com
 
-RUN yum update
-RUN yum install -y gcc44 gcc-c++ libgcc44 rpm-build
-RUN yum install -y autoconf automake libtool check
-RUN yum install -y bison flex
+RUN yum -y update
+RUN yum -y install gcc44 gcc-c++ libgcc44 rpm-build
+RUN yum -y install autoconf automake libtool check
+RUN yum -y install bison flex
 
 WORKDIR /data
 ADD build /bin/cogito-build
