@@ -104,6 +104,20 @@ to run the unit tests. In order to run the integration tests, run:
 
     $ tests/integration/test
 
+## Building
+
+To build the necessary artifacts, make sure docker is running on your machine. Then, to build the debian package, run:
+
+    $ docker build -t libcogito:debian debian
+    $ docker run -it -v $(pwd):/data libcogito:debian
+
+And to build the Amazon Linux package, run:
+
+    $ autoreconf -i
+    $ ./configure
+    $ docker build -t libcogito:amazon amazon
+    $ docker run -it -v $(pwd):/data libcogito:amazon
+
 ## Credits
 
 The [CCAN](https://ccodearchive.net/) JSON library is used by libcogito uses for parsing and generating JSON.

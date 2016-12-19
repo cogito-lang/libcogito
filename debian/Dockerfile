@@ -1,7 +1,3 @@
-# Building and running on mac:
-# docker build -t libcogito debian
-# docker run -it -v $(pwd):/data libcogito
-
 FROM debian:jessie
 MAINTAINER oss@localytics.com
 
