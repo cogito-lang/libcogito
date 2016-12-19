@@ -33,9 +33,9 @@ int main(int argc, char **argv) {
   cg_buf_t *buffer = cg_buf_build();
   int response;
 
-  if (argc > 1 && strcmp(argv[1], "to-iam") == 0) {
+  if (argc == 3 && strcmp(argv[1], "to-iam") == 0) {
     response = cg_to_iam(buffer, argv[2]);
-  } else if (argc > 1 && strcmp(argv[1], "to-json") == 0) {
+  } else if (argc == 3 && strcmp(argv[1], "to-json") == 0) {
     response = cg_to_json(buffer, argv[2]);
   } else {
     response = CG_ERR_USAGE;
