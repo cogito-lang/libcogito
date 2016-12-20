@@ -3,11 +3,13 @@
 CHECK_CFLAGS=' ' CHECK_LIBS=' ' ./configure
 make
 make dist
+make install
 
 mkdir -p /root/rpmbuild/SOURCES/
 FILENAME="$(ls cogito-*.tar.gz)"
 mv "$FILENAME" "/root/rpmbuild/SOURCES/lib$FILENAME"
-
 rpmbuild -ba amazon/libcogito.spec
+
 mkdir -p pkg/
 mv /root/rpmbuild/SRPMS/libcogito-*.rpm pkg/
+mv /usr/local/lib/libcogito.so* pkg/
