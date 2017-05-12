@@ -1,0 +1,36 @@
+/*#759c3e*/
+
+body {
+  font-family: Cambria, Georgia, serif;
+}
+
+.logo {
+  display: block;
+  margin: 10px auto;
+  width: 300px;
+}
+
+pre {
+  background-color: black;
+  border: 0;
+  color: #eee;
+  font-family: "Courier New", Courier, monospace;
+}
+
+li {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+a {
+  color: #759c3e;
+}
+
+a:hover {
+  color: #759c3e;
+}
+
+.icon {
+  margin-right: 5px;
+  width: 20px;
+}

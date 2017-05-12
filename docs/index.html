@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cogito</title>
+
+    <link rel="icon" type="image/ico" href="assets/favicon.ico.gzip">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="assets/cogito.png" class="logo" />
+          <p class="lead text-center">Define AWS IAM policies with ease using a smaller, quicker-to-read format.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-5 col-md-offset-1">
+          <em>policy.iam</em>
+          <pre>
+ALLOW dynamodb:Batch*, dynamodb:DeleteItem
+  ON dynamodb:::table/push*;
+
+ALLOW s3:PutRecord ON kinesis:::stream/push*;</pre>
+        </div>
+        <div class="col-xs-12 col-md-5">
+          <em>policy.json</em>
+          <pre>
+[
+  {
+    "Effect": "Allow",
+    "Action": [
+      "dynamodb:Batch*",
+      "dynamodb:DeleteItem"
+    ],
+    "Resource": [
+      "arn:aws:dynamodb:::table/push*"
+    ]
+  },
+  {
+    "Effect": "Allow",
+    "Action": [
+      "s3:PutRecord"
+    ],
+    "Resource": [
+      "arn:aws:kinesis:::stream/push*"
+    ]
+  }
+]</pre>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-10 col-sm-offset-1">
+          <br />
+          <p class="lead text-center">Integrate cogito into your workflow using:</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+          <ul class="list-unstyled">
+            <li>
+              <img src="assets/cloudformation.png" class="icon" />
+              <a href="https://github.com/localytics/cogito-resource">
+                the custom CloudFormation resource</a>
+            </li>
+            <li>
+              <img src="assets/ruby.png" class="icon" />
+              <a href="https://github.com/localytics/cogito-rb">
+                the ruby gem</a>
+            </li>
+            <li>
+              <img src="assets/python.png" class="icon" />
+              <a href="https://github.com/localytics/cogito-py">
+                the python package</a>
+            </li>
+            <li>
+              <img src="assets/sublime.png" class="icon" />
+              <a href="https://github.com/localytics/cogito.tmbundle">
+                the text editor support</a>
+            </li>
+          </ul>
+          <br />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
