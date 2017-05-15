@@ -123,12 +123,16 @@ cg_node_t* json_to_node(JsonNode* json) {
 // Append a JSON policy to a buffer
 int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
+  JsonNode *actionNode, *resourcesNode;
   cg_node_t *actions, *resources;
 
-  if ((actions = json_to_node(json_find_member(json, "Action"))) == NULL) {
+  actionNode = json_find_member(json, "Action");
+  if (actionNode == NULL || (actions = json_to_node(actionNode)) == NULL) {
     return CG_ERR_INVALID_ACTION;
   }
-  if ((resources = json_to_node(json_find_member(json, "Resource"))) == NULL) {
+
+  resourcesNode = json_find_member(json, "Resource");
+  if (resourcesNode == NULL || (resources = json_to_node(resourcesNode)) == NULL) {
     return CG_ERR_INVALID_RESOURCE;
   }
 
