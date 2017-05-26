@@ -123,17 +123,13 @@ to run the unit tests. In order to run the integration tests, run:
 
 ## Building
 
-To build the necessary artifacts, make sure docker is running on your machine. Then, to build the debian package, run:
+To build the necessary artifacts, make sure `docker` is running on your machine. Then, ensure that you've built the necessary autotools files with `autoreconf -i` and `./configure`. Then, to build the debian package, run:
 
-    $ docker build -t libcogito:debian debian
-    $ docker run -it -v $(pwd):/data libcogito:debian
+    $ make debian-build
 
 And to build the Amazon Linux package, run:
 
-    $ autoreconf -i
-    $ ./configure
-    $ docker build -t libcogito:amazon amazon
-    $ docker run -it -v $(pwd):/data libcogito:amazon
+    $ make amazon-build
 
 ## Credits
 
