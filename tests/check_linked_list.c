@@ -34,19 +34,6 @@ START_TEST(test_cg_ll_build)
 }
 END_TEST
 
-START_TEST(test_cg_ll_size)
-{
-  cg_node_t *head = cg_ll_build("head");
-  cg_ll_append(head, "body1");
-  cg_ll_append(head, "body2");
-  cg_ll_append(head, "body3");
-
-  int size = cg_ll_size(head);
-  ck_assert_int_eq(size, 4);
-  cg_ll_free(head);
-}
-END_TEST
-
 START_TEST(test_cg_ll_val_size_sum)
 {
   cg_node_t *head = cg_ll_build("head");
@@ -71,7 +58,6 @@ Suite* linked_list_suite(void)
   tcase_add_test(tc_core, test_cg_ll_append);
   tcase_add_test(tc_core, test_cg_ll_update);
   tcase_add_test(tc_core, test_cg_ll_build);
-  tcase_add_test(tc_core, test_cg_ll_size);
   tcase_add_test(tc_core, test_cg_ll_val_size_sum);
   suite_add_tcase(s, tc_core);
 

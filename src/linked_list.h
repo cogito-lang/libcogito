@@ -18,7 +18,6 @@ void cg_ll_append(cg_node_t *head, char *val);
 cg_node_t* cg_ll_update(cg_node_t *head, char *val);
 cg_node_t* cg_ll_build(char *val);
 void cg_ll_print(cg_node_t *node);
-int cg_ll_size(cg_node_t *head);
 size_t cg_ll_val_size_sum(cg_node_t *head);
 void cg_ll_free(cg_node_t *head);
 

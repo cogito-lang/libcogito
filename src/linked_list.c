@@ -38,17 +38,6 @@ void cg_ll_print(cg_node_t *node) {
   printf("\n");
 }
 
-// The number of nodes in the list
-int cg_ll_size(cg_node_t *head) {
-  int size = 0;
-  cg_node_t *ptr;
-
-  cg_ll_foreach(head, ptr) {
-    size += 1;
-  }
-  return size;
-}
-
 // The sum of the size of all of the values in the list
 size_t cg_ll_val_size_sum(cg_node_t *head) {
   size_t size = 0;
