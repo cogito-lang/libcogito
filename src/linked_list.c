@@ -42,6 +42,10 @@ size_t cg_ll_val_size_sum(cg_list_t *list) {
   return size;
 }
 
+void cg_ll_negate(cg_list_t *list) {
+  list->negated = 1 - list->negated;
+}
+
 void cg_ll_free(cg_list_t *list) {
   cg_node_t *previous = list->head;
   cg_node_t *current = list->head;

@@ -51,6 +51,11 @@ cg_list_t* cg_ll_build(char *val);
 size_t cg_ll_val_size_sum(cg_list_t *list);
 
 /**
+ * Negate the given list.
+ */
+void cg_ll_negate(cg_list_t *list);
+
+/**
  * Free the memory for the entire list.
  */
 void cg_ll_free(cg_list_t *list);

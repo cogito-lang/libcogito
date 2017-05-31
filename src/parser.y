@@ -26,10 +26,10 @@ static void cleanup_statement_allocs(statement_t *stmt);
 
 %parse-param { JsonNode *json_arr }
 
-%token COMMA END MACRO ON ITEM
+%token COMMA END MACRO ON NOT ITEM
 
-%type <str> COMMA END MACRO ON ITEM
-%type <list> list
+%type <str> COMMA END MACRO ON NOT ITEM
+%type <list> list list_content
 %type <stmt> statement
 
 %destructor { free($$); } MACRO ITEM
@@ -60,8 +60,13 @@ statement:
 ;
 
 list:
+  list_content              { $$ = $1; }
+  | NOT list_content        { cg_ll_negate($2); $$ = $2; }
+;
+
+list_content:
   ITEM                      { $$ = cg_ll_build($1); }
-  | list COMMA ITEM         { cg_ll_append($1, $3); $$ = $1; }
+  | list_content COMMA ITEM { cg_ll_append($1, $3); $$ = $1; }
 ;
 %%
 
