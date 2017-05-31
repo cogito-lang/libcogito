@@ -11,8 +11,8 @@ static void format_macro(char *macro) {
 }
 
 // Add elements to a JSON array
-static void add_elements_to_array(cg_node_t *head, JsonNode *array) {
-  cg_node_t *ptr = head;
+static void add_elements_to_array(cg_list_t *list, JsonNode *array) {
+  cg_node_t *ptr = list->head;
   while (ptr != NULL) {
     json_append_element(array, json_mkstring(ptr->val));
     ptr = ptr->next;
@@ -20,15 +20,15 @@ static void add_elements_to_array(cg_node_t *head, JsonNode *array) {
 }
 
 // Add a list of statement elements to the JSON object
-static void add_statement_elements(cg_node_t *head, JsonNode *json, char *json_key) {
+static void add_statement_elements(cg_list_t *list, JsonNode *json, char *json_key) {
   JsonNode *elements = json_mkarray();
-  add_elements_to_array(head, elements);
+  add_elements_to_array(list, elements);
   json_append_member(json, json_key, elements);
 }
 
 
 // Build a statement object from the given macro, actions, and resources
-statement_t* stmt_build(char *macro, cg_node_t *actions, cg_node_t *resources) {
+statement_t* stmt_build(char *macro, cg_list_t *actions, cg_list_t *resources) {
   statement_t *stmt = (statement_t*) malloc(sizeof(statement_t));
   stmt->macro = macro;
   stmt->actions = actions;
@@ -62,8 +62,8 @@ static void add_macro_to_iam(cg_buf_t *buffer, char *macro) {
 }
 
 // Add a list of statement elements to the IAM string buffer
-static void add_elements_to_iam(cg_buf_t *buffer, cg_node_t *elements) {
-  cg_node_t *ptr = elements;
+static void add_elements_to_iam(cg_buf_t *buffer, cg_list_t *elements) {
+  cg_node_t *ptr = elements->head;
   while (ptr != NULL) {
     cg_buf_append(buffer, "  ");
     cg_buf_append(buffer, ptr->val);
@@ -100,31 +100,32 @@ char* stmt_to_iam(statement_t *stmt) {
   return iam;
 }
 
-// Convert a JSON string or array to a cg_node_t
-cg_node_t* json_to_node(JsonNode* json) {
-  cg_node_t *node;
+// Convert a JSON string or array to a cg_list_t
+cg_list_t* json_to_node(JsonNode* json) {
+  cg_list_t *list;
+
   switch (json->tag) {
     case JSON_STRING:
-      node = cg_ll_build(json->string_);
+      list = cg_ll_build(json->string_);
       break;
     case JSON_ARRAY:
-      node = (cg_node_t *)NULL;
+      list = (cg_list_t *) NULL;
       JsonNode *element;
       json_foreach(element, json) {
-        node = cg_ll_update(node, element->string_);
+        list = cg_ll_update(list, element->string_);
       }
       break;
     default:
-      return (cg_node_t *)NULL;
+      return (cg_list_t *) NULL;
   }
-  return node;
+  return list;
 }
 
 // Append a JSON policy to a buffer
 int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
   JsonNode *actionNode, *resourcesNode;
-  cg_node_t *actions, *resources;
+  cg_list_t *actions, *resources;
 
   actionNode = json_find_member(json, "Action");
   if (actionNode == NULL || (actions = json_to_node(actionNode)) == NULL) {

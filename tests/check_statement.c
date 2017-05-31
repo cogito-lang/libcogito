@@ -6,13 +6,13 @@
 
 START_TEST(test_stmt_build)
 {
-  cg_node_t *actions = cg_ll_build("s3:PutObject");
-  cg_node_t *resources = cg_ll_build("s3:::test-bucket*/*");
+  cg_list_t *actions = cg_ll_build("s3:PutObject");
+  cg_list_t *resources = cg_ll_build("s3:::test-bucket*/*");
   statement_t *statement = stmt_build("allow", actions, resources);
 
   ck_assert_str_eq(statement->macro, "allow");
-  ck_assert_str_eq(statement->actions->val, "s3:PutObject");
-  ck_assert_str_eq(statement->resources->val, "s3:::test-bucket*/*");
+  ck_assert_str_eq(statement->actions->head->val, "s3:PutObject");
+  ck_assert_str_eq(statement->resources->head->val, "s3:::test-bucket*/*");
 
   stmt_free(statement);
 }

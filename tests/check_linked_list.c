@@ -6,43 +6,43 @@
 
 START_TEST(test_cg_ll_append)
 {
-  cg_node_t *head = cg_ll_build("head");
-  cg_ll_append(head, "tail");
+  cg_list_t *list = cg_ll_build("head");
+  cg_ll_append(list, "tail");
 
-  ck_assert_str_eq(head->next->val, "tail");
-  cg_ll_free(head);
+  ck_assert_str_eq(list->head->next->val, "tail");
+  cg_ll_free(list);
 }
 END_TEST
 
 START_TEST(test_cg_ll_update)
 {
-  cg_node_t *head = cg_ll_update(NULL, "head");
-  ck_assert_str_eq(head->val, "head");
-  cg_ll_update(head, "tail");
+  cg_list_t *list = cg_ll_update(NULL, "head");
+  ck_assert_str_eq(list->head->val, "head");
+  cg_ll_update(list, "tail");
 
-  ck_assert_str_eq(head->next->val, "tail");
-  cg_ll_free(head);
+  ck_assert_str_eq(list->head->next->val, "tail");
+  cg_ll_free(list);
 }
 END_TEST
 
 START_TEST(test_cg_ll_build)
 {
-  cg_node_t *head = cg_ll_build("head");
+  cg_list_t *list = cg_ll_build("head");
 
-  ck_assert_str_eq(head->val, "head");
-  cg_ll_free(head);
+  ck_assert_str_eq(list->head->val, "head");
+  cg_ll_free(list);
 }
 END_TEST
 
 START_TEST(test_cg_ll_val_size_sum)
 {
-  cg_node_t *head = cg_ll_build("head");
-  cg_ll_append(head, "this is the body");
-  cg_ll_append(head, "tail");
+  cg_list_t *list = cg_ll_build("head");
+  cg_ll_append(list, "this is the body");
+  cg_ll_append(list, "tail");
 
-  size_t sum = cg_ll_val_size_sum(head);
+  size_t sum = cg_ll_val_size_sum(list);
   ck_assert_int_eq(sum, 24);
-  cg_ll_free(head);
+  cg_ll_free(list);
 }
 END_TEST
 

@@ -20,7 +20,7 @@ static void cleanup_statement_allocs(statement_t *stmt);
 
 %union {
   char *str;
-  cg_node_t *node;
+  cg_list_t *list;
   statement_t *stmt;
 }
 
@@ -29,21 +29,20 @@ static void cleanup_statement_allocs(statement_t *stmt);
 %token COMMA END MACRO ON ITEM
 
 %type <str> COMMA END MACRO ON ITEM
-%type <node> list
+%type <list> list
 %type <stmt> statement
-
 
 %destructor { free($$); } MACRO ITEM
 %destructor { 
-    cg_node_t *ptr;
-    cg_ll_foreach($$, ptr) {
-        free(ptr->val);
-    }
-    cg_ll_free($$);
+  cg_node_t *ptr;
+  cg_ll_foreach($$, ptr) {
+    free(ptr->val);
+  }
+  cg_ll_free($$);
 } list
 %destructor { 
-    cleanup_statement_allocs($$);
-    stmt_free($$); 
+  cleanup_statement_allocs($$);
+  stmt_free($$); 
 } statement
 
 %%
@@ -81,11 +80,11 @@ static void cleanup_json_arr(JsonNode *json_arr) {
 
 static void cleanup_statement_allocs(statement_t *stmt) {
     cg_node_t *ptr;
-  
+
     cg_ll_foreach(stmt->actions, ptr) {
       free(ptr->val);
     }
-  
+
     cg_ll_foreach(stmt->resources, ptr) {
       free(ptr->val);
     }
