@@ -2,12 +2,14 @@
 
 // Capitalize the macro string
 static void format_macro(char *macro) {
-    char *ptr = macro;
-    if (*ptr != '\0') *ptr = toupper(*ptr);
-            
-    while (*(++ptr) != '\0') {
-        *ptr = tolower(*ptr);
-    }
+  char *ptr = macro;
+  if (*ptr != '\0') {
+    *ptr = toupper(*ptr);
+  }
+
+  while (*(++ptr) != '\0') {
+    *ptr = tolower(*ptr);
+  }
 }
 
 // Add elements to a JSON array
@@ -43,8 +45,12 @@ JsonNode* stmt_to_json(statement_t *stmt) {
   format_macro(stmt->macro);
   json_append_member(json, "Effect", json_mkstring(stmt->macro));
 
-  add_statement_elements(stmt->actions, json, "Action");
-  add_statement_elements(stmt->resources, json, "Resource");
+  add_statement_elements(stmt->actions, json,
+    stmt->actions->negated ? "NotAction" : "Action");
+
+  add_statement_elements(stmt->resources, json,
+    stmt->resources->negated ? "NotResource" : "Resource");
+
   return json;
 }
 
@@ -124,17 +130,33 @@ cg_list_t* json_to_node(JsonNode* json) {
 // Append a JSON policy to a buffer
 int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
-  JsonNode *actionNode, *resourcesNode;
+  JsonNode *node;
   cg_list_t *actions, *resources;
 
-  actionNode = json_find_member(json, "Action");
-  if (actionNode == NULL || (actions = json_to_node(actionNode)) == NULL) {
+  if ((node = json_find_member(json, "Action")) != NULL) {
+    if ((actions = json_to_node(node)) == NULL) {
+      return CG_ERR_INVALID_ACTION;
+    }
+  } else if ((node = json_find_member(json, "NotAction")) != NULL) {
+    if ((actions = json_to_node(node)) == NULL) {
+      return CG_ERR_INVALID_ACTION;
+    }
+    cg_ll_negate(actions);
+  } else {
     return CG_ERR_INVALID_ACTION;
   }
 
-  resourcesNode = json_find_member(json, "Resource");
-  if (resourcesNode == NULL || (resources = json_to_node(resourcesNode)) == NULL) {
-    return CG_ERR_INVALID_RESOURCE;
+  if ((node = json_find_member(json, "Resource")) != NULL) {
+    if ((resources = json_to_node(node)) == NULL) {
+      return CG_ERR_INVALID_ACTION;
+    }
+  } else if ((node = json_find_member(json, "NotResource")) != NULL) {
+    if ((resources = json_to_node(node)) == NULL) {
+      return CG_ERR_INVALID_ACTION;
+    }
+    cg_ll_negate(resources);
+  } else {
+    return CG_ERR_INVALID_ACTION;
   }
 
   char *iam = stmt_to_iam(stmt_build(macro->string_, actions, resources));

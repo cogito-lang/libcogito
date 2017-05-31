@@ -22,5 +22,25 @@
       "iota",
       "lambda"
     ]
+  },
+  {
+    "Effect": "Allow",
+    "NotAction": [
+      "mu",
+      "nu"
+    ],
+    "Resource": [
+      "xi"
+    ]
+  },
+  {
+    "Effect": "Deny",
+    "Action": [
+      "omicron"
+    ],
+    "NotResource": [
+      "pi",
+      "rho"
+    ]
   }
 ]
