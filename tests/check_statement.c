@@ -11,8 +11,8 @@ START_TEST(test_stmt_build)
   statement_t *statement = stmt_build("allow", actions, resources);
 
   ck_assert_str_eq(statement->macro, "allow");
-  ck_assert_str_eq(statement->actions->head->val, "s3:PutObject");
-  ck_assert_str_eq(statement->resources->head->val, "s3:::test-bucket*/*");
+  ck_assert_str_eq(statement->actions->head->value, "s3:PutObject");
+  ck_assert_str_eq(statement->resources->head->value, "s3:::test-bucket*/*");
 
   stmt_free(statement);
 }

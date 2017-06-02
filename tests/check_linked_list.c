@@ -9,7 +9,7 @@ START_TEST(test_cg_ll_append)
   cg_list_t *list = cg_ll_build("head");
   cg_ll_append(list, "tail");
 
-  ck_assert_str_eq(list->head->next->val, "tail");
+  ck_assert_str_eq(list->head->next->value, "tail");
   cg_ll_free(list);
 }
 END_TEST
@@ -17,10 +17,10 @@ END_TEST
 START_TEST(test_cg_ll_update)
 {
   cg_list_t *list = cg_ll_update(NULL, "head");
-  ck_assert_str_eq(list->head->val, "head");
+  ck_assert_str_eq(list->head->value, "head");
   cg_ll_update(list, "tail");
 
-  ck_assert_str_eq(list->head->next->val, "tail");
+  ck_assert_str_eq(list->head->next->value, "tail");
   cg_ll_free(list);
 }
 END_TEST
@@ -29,18 +29,18 @@ START_TEST(test_cg_ll_build)
 {
   cg_list_t *list = cg_ll_build("head");
 
-  ck_assert_str_eq(list->head->val, "head");
+  ck_assert_str_eq(list->head->value, "head");
   cg_ll_free(list);
 }
 END_TEST
 
-START_TEST(test_cg_ll_val_size_sum)
+START_TEST(test_cg_ll_value_size_sum)
 {
   cg_list_t *list = cg_ll_build("head");
   cg_ll_append(list, "this is the body");
   cg_ll_append(list, "tail");
 
-  size_t sum = cg_ll_val_size_sum(list);
+  size_t sum = cg_ll_value_size_sum(list);
   ck_assert_int_eq(sum, 24);
   cg_ll_free(list);
 }
@@ -58,7 +58,7 @@ Suite* linked_list_suite(void)
   tcase_add_test(tc_core, test_cg_ll_append);
   tcase_add_test(tc_core, test_cg_ll_update);
   tcase_add_test(tc_core, test_cg_ll_build);
-  tcase_add_test(tc_core, test_cg_ll_val_size_sum);
+  tcase_add_test(tc_core, test_cg_ll_value_size_sum);
   suite_add_tcase(s, tc_core);
 
   return s;

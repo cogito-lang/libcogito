@@ -36,7 +36,7 @@ static void cleanup_statement_allocs(statement_t *stmt);
 %destructor { 
   cg_node_t *ptr;
   cg_ll_foreach($$, ptr) {
-    free(ptr->val);
+    free(ptr->value);
   }
   cg_ll_free($$);
 } list
@@ -84,15 +84,15 @@ static void cleanup_json_arr(JsonNode *json_arr) {
 }
 
 static void cleanup_statement_allocs(statement_t *stmt) {
-    cg_node_t *ptr;
+  cg_node_t *ptr;
 
-    cg_ll_foreach(stmt->actions, ptr) {
-      free(ptr->val);
-    }
+  cg_ll_foreach(stmt->actions, ptr) {
+    free(ptr->value);
+  }
 
-    cg_ll_foreach(stmt->resources, ptr) {
-      free(ptr->val);
-    }
+  cg_ll_foreach(stmt->resources, ptr) {
+    free(ptr->value);
+  }
 }
 
 int cg_to_json(cg_buf_t *buffer, char *input) {

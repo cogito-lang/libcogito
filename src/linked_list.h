@@ -11,7 +11,7 @@
  * representing the AWS identifier and a pointer to the next node.
  */
 typedef struct cg_node {
-  char *val;
+  char *value;
   struct cg_node *next;
 } cg_node_t;
 
@@ -33,22 +33,22 @@ typedef struct {
 /**
  * Append a node to the end of the list.
  */
-void cg_ll_append(cg_list_t *list, char *val);
+void cg_ll_append(cg_list_t *list, char *value);
 
 /**
  * Build the first node or append a node to the list.
  */
-cg_list_t* cg_ll_update(cg_list_t *list, char *val);
+cg_list_t* cg_ll_update(cg_list_t *list, char *value);
 
 /**
  * Build the first list node and return the list.
  */
-cg_list_t* cg_ll_build(char *val);
+cg_list_t* cg_ll_build(char *value);
 
 /**
  * The sum of the size of all of the values in the list.
  */
-size_t cg_ll_val_size_sum(cg_list_t *list);
+size_t cg_ll_value_size_sum(cg_list_t *list);
 
 /**
  * Negate the given list.

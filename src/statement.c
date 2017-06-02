@@ -16,7 +16,7 @@ static void format_macro(char *macro) {
 static void add_elements_to_array(cg_list_t *list, JsonNode *array) {
   cg_node_t *ptr = list->head;
   while (ptr != NULL) {
-    json_append_element(array, json_mkstring(ptr->val));
+    json_append_element(array, json_mkstring(ptr->value));
     ptr = ptr->next;
   }
 }
@@ -72,7 +72,7 @@ static void add_elements_to_iam(cg_buf_t *buffer, cg_list_t *elements) {
   cg_node_t *ptr = elements->head;
   while (ptr != NULL) {
     cg_buf_append(buffer, "  ");
-    cg_buf_append(buffer, ptr->val);
+    cg_buf_append(buffer, ptr->value);
 
     if (ptr->next != NULL) {
       cg_buf_append(buffer, ",\n");
