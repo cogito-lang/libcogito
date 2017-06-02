@@ -131,6 +131,17 @@ And to build the Amazon Linux package, run:
 
     $ make amazon-build
 
+## Releasing
+
+Releasing a new version requires updating things in a couple places - follow the below script:
+
+- Update the [amazon rpm spec](amazon/libcogito.spec) and the [debian changelog](debian/changelog).
+- Merge the changes into master.
+- Tag a release off of master with the new version and update the GitHub release docs.
+- Build the packages artifacts (see Building above).
+- Upload the artifacts to S3 under the `public.localytics` bucket.
+- Update the [homebrew formula](https://github.com/localytics/homebrew-formulae/blob/master/Formula/cogito.rb) to point to the latest version.
+
 ## Credits
 
 The [CCAN](https://ccodearchive.net/) JSON library is used by libcogito uses for parsing and generating JSON.
