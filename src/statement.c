@@ -28,32 +28,6 @@ static void add_statement_elements(cg_list_t *list, JsonNode *json, char *json_k
   json_append_member(json, json_key, elements);
 }
 
-
-// Build a statement object from the given macro, actions, and resources
-statement_t* stmt_build(char *macro, cg_list_t *actions, cg_list_t *resources) {
-  statement_t *stmt = (statement_t*) malloc(sizeof(statement_t));
-  stmt->macro = macro;
-  stmt->actions = actions;
-  stmt->resources = resources;
-  return stmt;
-}
-
-// Converts a given statement object to a JsonNode object
-JsonNode* stmt_to_json(statement_t *stmt) {
-  JsonNode *json = json_mkobject();
-
-  format_macro(stmt->macro);
-  json_append_member(json, "Effect", json_mkstring(stmt->macro));
-
-  add_statement_elements(stmt->actions, json,
-    stmt->actions->negated ? "NotAction" : "Action");
-
-  add_statement_elements(stmt->resources, json,
-    stmt->resources->negated ? "NotResource" : "Resource");
-
-  return json;
-}
-
 // Add the statement macro to the IAM string buffer
 static void add_macro_to_iam(cg_buf_t *buffer, char *macro) {
   int idx;
@@ -81,15 +55,8 @@ static void add_elements_to_iam(cg_buf_t *buffer, cg_list_t *elements) {
   }
 }
 
-// Free a statement_t object
-void stmt_free(statement_t *stmt) {
-  cg_ll_free(stmt->actions);
-  cg_ll_free(stmt->resources);
-  free(stmt);
-}
-
 // Convert a stmt_t to an IAM string
-char* stmt_to_iam(statement_t *stmt) {
+static char* stmt_to_iam(cg_statement_t *stmt) {
   cg_buf_t *buffer = cg_buf_build();
 
   add_macro_to_iam(buffer, stmt->macro);
@@ -101,13 +68,13 @@ char* stmt_to_iam(statement_t *stmt) {
 
   char *iam = buffer->content;
   free(buffer);
-  stmt_free(stmt);
+  cg_stmt_free(stmt);
 
   return iam;
 }
 
 // Convert a JSON string or array to a cg_list_t
-cg_list_t* json_to_node(JsonNode* json) {
+static cg_list_t* json_to_node(JsonNode* json) {
   cg_list_t *list;
 
   switch (json->tag) {
@@ -127,7 +94,35 @@ cg_list_t* json_to_node(JsonNode* json) {
   return list;
 }
 
-// Append a JSON policy to a buffer
+cg_statement_t* cg_stmt_build(char *macro, cg_list_t *actions, cg_list_t *resources) {
+  cg_statement_t *stmt = (cg_statement_t*) malloc(sizeof(cg_statement_t));
+  stmt->macro = macro;
+  stmt->actions = actions;
+  stmt->resources = resources;
+  return stmt;
+}
+
+void cg_stmt_free(cg_statement_t *stmt) {
+  cg_ll_free(stmt->actions);
+  cg_ll_free(stmt->resources);
+  free(stmt);
+}
+
+JsonNode* cg_stmt_to_json(cg_statement_t *stmt) {
+  JsonNode *json = json_mkobject();
+
+  format_macro(stmt->macro);
+  json_append_member(json, "Effect", json_mkstring(stmt->macro));
+
+  add_statement_elements(stmt->actions, json,
+    stmt->actions->negated ? "NotAction" : "Action");
+
+  add_statement_elements(stmt->resources, json,
+    stmt->resources->negated ? "NotResource" : "Resource");
+
+  return json;
+}
+
 int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
   JsonNode *macro = json_find_member(json, "Effect");
   JsonNode *node;
@@ -159,7 +154,7 @@ int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
     return CG_ERR_INVALID_ACTION;
   }
 
-  char *iam = stmt_to_iam(stmt_build(macro->string_, actions, resources));
+  char *iam = stmt_to_iam(cg_stmt_build(macro->string_, actions, resources));
   int response_code = cg_buf_append(buffer, iam);
   free(iam);
 

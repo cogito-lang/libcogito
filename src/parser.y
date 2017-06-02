@@ -15,13 +15,13 @@ extern int yyparse();
 extern YY_BUFFER_STATE yy_scan_string(char *str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 
-static void cleanup_statement_allocs(statement_t *stmt);
+static void cleanup_statement_allocs(cg_statement_t *stmt);
 %}
 
 %union {
   char *str;
   cg_list_t *list;
-  statement_t *stmt;
+  cg_statement_t *stmt;
 }
 
 %parse-param { JsonNode *json_arr }
@@ -42,21 +42,21 @@ static void cleanup_statement_allocs(statement_t *stmt);
 } list
 %destructor { 
   cleanup_statement_allocs($$);
-  stmt_free($$); 
+  cg_stmt_free($$); 
 } statement
 
 %%
 input:
   /* empty */
   | input statement { 
-    json_append_element(json_arr, stmt_to_json($2)); 
+    json_append_element(json_arr, cg_stmt_to_json($2)); 
     cleanup_statement_allocs($2);
-    stmt_free($2);
+    cg_stmt_free($2);
 }
 ;
 
 statement:
-  MACRO list ON list END    { $$ = stmt_build($1, $2, $4); }
+  MACRO list ON list END    { $$ = cg_stmt_build($1, $2, $4); }
 ;
 
 list:
@@ -83,7 +83,7 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-static void cleanup_statement_allocs(statement_t *stmt) {
+static void cleanup_statement_allocs(cg_statement_t *stmt) {
   cg_node_t *ptr;
 
   cg_ll_foreach(stmt->actions, ptr) {
