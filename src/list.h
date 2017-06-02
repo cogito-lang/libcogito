@@ -1,5 +1,5 @@
-#ifndef COGITO_LINKED_LIST
-#define COGITO_LINKED_LIST
+#ifndef COGITO_LIST
+#define COGITO_LIST
 
 #include <ctype.h>
 #include <stdio.h>
