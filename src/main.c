@@ -7,9 +7,6 @@
 #include "src/statement.h"
 #include "src/parser.h"
 
-int cg_to_json(cg_buf_t *buffer, char *input);
-int cg_to_iam(cg_buf_t *buffer, char *input);
-
 #define CG_ERR_USAGE -1
 
 static void process(int response) {
