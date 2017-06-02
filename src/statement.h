@@ -1,5 +1,5 @@
-#ifndef COGITO_STMT
-#define COGITO_STMT
+#ifndef COGITO_STATEMENT
+#define COGITO_STATEMENT
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +9,11 @@
 #include "json.h"
 #include "linked_list.h"
 
+/**
+ * A struct representing a cogito statement. Contains a string which is either
+ * ALLOW or DENY. Also contains a pointer to both a list of actions and a list
+ * of resources.
+ */
 typedef struct {
   char *macro;
   cg_list_t *actions;

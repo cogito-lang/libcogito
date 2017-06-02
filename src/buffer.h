@@ -18,16 +18,21 @@ typedef struct {
 
 /**
  * Initialize and return a new cg_buf_t struct.
+ * @return A newly allocated and initialized buffer struct
  */
 cg_buf_t* cg_buf_build(void);
 
 /**
  * Copy a given string onto the given buffer, expanding if necessary.
+ * @param buffer The buffer on which to append
+ * @param str The string to append onto the buffer
+ * @return An integer describing success (0 for success, 1 for failure)
  */
 int cg_buf_append(cg_buf_t *buffer, const char *str);
 
 /**
  * Free the allocated buffer and its associated string.
+ * @param buffer The buffer to free
  */
 void cg_buf_free(cg_buf_t *buffer);
 
