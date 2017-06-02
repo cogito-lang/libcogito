@@ -4,7 +4,7 @@
 
 #include "buffer.h"
 #include "errors.h"
-#include "linked_list.h"
+#include "list.h"
 #include "statement.h"
 
 int yylex();
@@ -38,7 +38,7 @@ static void cleanup_statement_allocs(cg_statement_t *stmt);
   cg_ll_foreach($$, ptr) {
     free(ptr->value);
   }
-  cg_ll_free($$);
+  cg_list_free($$);
 } list
 %destructor { 
   cleanup_statement_allocs($$);
@@ -61,12 +61,12 @@ statement:
 
 list:
   list_content              { $$ = $1; }
-  | NOT list_content        { cg_ll_negate($2); $$ = $2; }
+  | NOT list_content        { cg_list_negate($2); $$ = $2; }
 ;
 
 list_content:
-  ITEM                      { $$ = cg_ll_build($1); }
-  | list_content COMMA ITEM { cg_ll_append($1, $3); $$ = $1; }
+  ITEM                      { $$ = cg_list_build($1); }
+  | list_content COMMA ITEM { cg_list_append($1, $3); $$ = $1; }
 ;
 %%
 

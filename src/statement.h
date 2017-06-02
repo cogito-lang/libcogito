@@ -7,7 +7,7 @@
 #include "buffer.h"
 #include "errors.h"
 #include "json.h"
-#include "linked_list.h"
+#include "list.h"
 
 /**
  * A struct representing a cogito statement. Contains a string which is either

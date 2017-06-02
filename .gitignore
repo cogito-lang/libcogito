@@ -37,7 +37,7 @@ Makefile.in
 /tests/*.log
 /tests/*.trs
 /tests/check_buffer
-/tests/check_linked_list
+/tests/check_list
 /tests/check_statement
 /tests/integration/a.out
 

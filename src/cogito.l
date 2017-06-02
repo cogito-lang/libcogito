@@ -1,6 +1,6 @@
 %{
 #include <stdlib.h>
-#include "linked_list.h"
+#include "list.h"
 #include "statement.h"
 #include "parser.h"
 %}

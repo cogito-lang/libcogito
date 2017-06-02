@@ -80,13 +80,13 @@ static cg_list_t* json_to_node(JsonNode* json) {
 
   switch (json->tag) {
     case JSON_STRING:
-      list = cg_ll_build(json->string_);
+      list = cg_list_build(json->string_);
       break;
     case JSON_ARRAY:
       list = (cg_list_t *) NULL;
       JsonNode *element;
       json_foreach(element, json) {
-        list = cg_ll_update(list, element->string_);
+        list = cg_list_update(list, element->string_);
       }
       break;
     default:
@@ -104,8 +104,8 @@ cg_statement_t* cg_stmt_build(char *macro, cg_list_t *actions, cg_list_t *resour
 }
 
 void cg_stmt_free(cg_statement_t *stmt) {
-  cg_ll_free(stmt->actions);
-  cg_ll_free(stmt->resources);
+  cg_list_free(stmt->actions);
+  cg_list_free(stmt->resources);
   free(stmt);
 }
 
@@ -137,7 +137,7 @@ int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
     if ((actions = json_to_node(node)) == NULL) {
       return CG_ERR_INVALID_ACTION;
     }
-    cg_ll_negate(actions);
+    cg_list_negate(actions);
   } else {
     return CG_ERR_INVALID_ACTION;
   }
@@ -150,7 +150,7 @@ int cg_append_json_policy(cg_buf_t *buffer, JsonNode *json) {
     if ((resources = json_to_node(node)) == NULL) {
       return CG_ERR_INVALID_ACTION;
     }
-    cg_ll_negate(resources);
+    cg_list_negate(resources);
   } else {
     return CG_ERR_INVALID_ACTION;
   }
