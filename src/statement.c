@@ -38,7 +38,6 @@ static void add_macro_to_iam(cg_buf_t *buffer, char *macro) {
   }
 
   cg_buf_append(buffer, macro);
-  cg_buf_append(buffer, "\n");
 }
 
 // Add a list of statement elements to the IAM string buffer
@@ -60,9 +59,11 @@ static char* stmt_to_iam(cg_statement_t *stmt) {
   cg_buf_t *buffer = cg_buf_build();
 
   add_macro_to_iam(buffer, stmt->macro);
+  cg_buf_append(buffer, stmt->actions->negated ? " NOT\n" : "\n");
   add_elements_to_iam(buffer, stmt->actions);
 
-  cg_buf_append(buffer, "\nON\n");
+  cg_buf_append(buffer, "\nON");
+  cg_buf_append(buffer, stmt->resources->negated ? " NOT\n" : "\n");
   add_elements_to_iam(buffer, stmt->resources);
   cg_buf_append(buffer, ";");
 

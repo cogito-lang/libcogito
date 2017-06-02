@@ -18,3 +18,8 @@ ALLOW
   mu
 ON
   nu;
+
+ALLOW NOT
+  xi
+ON NOT
+  omicron;
