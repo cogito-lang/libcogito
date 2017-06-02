@@ -76,7 +76,7 @@ ON
 You can link against `libcogito` after it has been installed by including `cogito.h` in your C program. This will give you a `buffer` struct:
 
 ```c
-typedef struct cg_buf {
+typedef struct {
   size_t length;
   size_t capacity;
   char *content;
@@ -86,8 +86,8 @@ typedef struct cg_buf {
 and two functions: `cg_to_json` and `cg_to_iam`. The call signature for these functions is:
 
 ```c
-int cg_to_json(cg_buf_t *buffer, char *input);
-int cg_to_iam(cg_buf_t *buffer, char *input);
+int cg_to_json(cg_buf_t *buffer, char *str);
+int cg_to_iam(cg_buf_t *buffer, char *str);
 ```
 
 where the return value will be a 0 in the case of success and an error code otherwise.

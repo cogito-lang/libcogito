@@ -27,5 +27,10 @@
     "Effect": "Allow",
     "Action": "mu",
     "Resource": "nu"
+  },
+  {
+    "Effect": "Allow",
+    "NotAction": "xi",
+    "NotResource": "omicron"
   }
 ]

@@ -1,2 +1,4 @@
 allow alpha, beta, gamma on delta, epsilon;
 deny zeta, eta on theta, iota, lambda;
+allow not mu, nu on xi;
+deny omicron on not pi, rho;

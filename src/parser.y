@@ -15,54 +15,58 @@ extern int yyparse();
 extern YY_BUFFER_STATE yy_scan_string(char *str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 
-static void cleanup_statement_allocs(statement_t *stmt);
+static void cleanup_statement_allocs(cg_statement_t *stmt);
 %}
 
 %union {
   char *str;
-  cg_node_t *node;
-  statement_t *stmt;
+  cg_list_t *list;
+  cg_statement_t *stmt;
 }
 
 %parse-param { JsonNode *json_arr }
 
-%token COMMA END MACRO ON ITEM
+%token COMMA END MACRO ON NOT ITEM
 
-%type <str> COMMA END MACRO ON ITEM
-%type <node> list
+%type <str> COMMA END MACRO ON NOT ITEM
+%type <list> list list_content
 %type <stmt> statement
-
 
 %destructor { free($$); } MACRO ITEM
 %destructor { 
-    cg_node_t *ptr;
-    cg_ll_foreach($$, ptr) {
-        free(ptr->val);
-    }
-    cg_ll_free($$);
+  cg_node_t *ptr;
+  cg_ll_foreach($$, ptr) {
+    free(ptr->value);
+  }
+  cg_ll_free($$);
 } list
 %destructor { 
-    cleanup_statement_allocs($$);
-    stmt_free($$); 
+  cleanup_statement_allocs($$);
+  cg_stmt_free($$); 
 } statement
 
 %%
 input:
   /* empty */
   | input statement { 
-    json_append_element(json_arr, stmt_to_json($2)); 
+    json_append_element(json_arr, cg_stmt_to_json($2)); 
     cleanup_statement_allocs($2);
-    stmt_free($2);
+    cg_stmt_free($2);
 }
 ;
 
 statement:
-  MACRO list ON list END    { $$ = stmt_build($1, $2, $4); }
+  MACRO list ON list END    { $$ = cg_stmt_build($1, $2, $4); }
 ;
 
 list:
+  list_content              { $$ = $1; }
+  | NOT list_content        { cg_ll_negate($2); $$ = $2; }
+;
+
+list_content:
   ITEM                      { $$ = cg_ll_build($1); }
-  | list COMMA ITEM         { cg_ll_append($1, $3); $$ = $1; }
+  | list_content COMMA ITEM { cg_ll_append($1, $3); $$ = $1; }
 ;
 %%
 
@@ -79,16 +83,16 @@ static void cleanup_json_arr(JsonNode *json_arr) {
   json_delete(json_arr);
 }
 
-static void cleanup_statement_allocs(statement_t *stmt) {
-    cg_node_t *ptr;
-  
-    cg_ll_foreach(stmt->actions, ptr) {
-      free(ptr->val);
-    }
-  
-    cg_ll_foreach(stmt->resources, ptr) {
-      free(ptr->val);
-    }
+static void cleanup_statement_allocs(cg_statement_t *stmt) {
+  cg_node_t *ptr;
+
+  cg_ll_foreach(stmt->actions, ptr) {
+    free(ptr->value);
+  }
+
+  cg_ll_foreach(stmt->resources, ptr) {
+    free(ptr->value);
+  }
 }
 
 int cg_to_json(cg_buf_t *buffer, char *input) {
