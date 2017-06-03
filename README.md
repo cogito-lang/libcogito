@@ -35,9 +35,30 @@ cogito will generate:
 ]
 ```
 
-## Getting Started
+## Installation
 
-To get started, run:
+To get started on Mac, we host Cogito as a [homebrew formula](https://github.com/localytics/homebrew-formulae), so to install run:
+ 
+```
+brew tap localytics/formulae
+brew install cogito
+```
+ 
+On other debian-based systems, you can install it with:
+ 
+```
+FILE=$(mktemp)
+wget 'https://s3.amazonaws.com/public.localytics/artifacts/libcogito_0.0.1-1_amd64.deb' -qO $FILE
+sudo dpkg -i $FILE && rm $FILE
+```
+ 
+On amazon linux, you can download the appropriate object file from our S3 bucket here:
+ 
+```
+wget https://s3.amazonaws.com/public.localytics/artifacts/cogito/amazon/libcogito.so
+```
+
+To install from source, checkout this repository and run:
 
 ```
 autoreconf -i
