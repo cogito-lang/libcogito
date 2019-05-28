@@ -174,3 +174,11 @@ Releasing a new version requires updating things in a couple places - follow the
 ## Credits
 
 The [CCAN](https://ccodearchive.net/) JSON library is used by libcogito uses for parsing and generating JSON.
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/cogito-lang/libcogito.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
