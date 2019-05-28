@@ -48,14 +48,14 @@ On other debian-based systems, you can install it with:
  
 ```sh
 FILE=$(mktemp)
-wget 'https://s3.amazonaws.com/public.localytics/artifacts/libcogito_0.2.0-1_amd64.deb' -qO $FILE
+wget 'https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito_0.2.0-1_amd64.deb' -qO $FILE
 sudo dpkg -i $FILE && rm $FILE
 ```
  
-On amazon linux, you can download the appropriate object file from our S3 bucket here:
+On amazon linux, you can download the appropriate object file from the GitHub release here:
  
 ```sh
-wget https://s3.amazonaws.com/public.localytics/artifacts/cogito/amazon/libcogito.so
+wget https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito.so
 ```
 
 To install from source, checkout this repository and run:
@@ -160,7 +160,7 @@ Releasing a new version requires updating things in a couple places - follow the
 - Merge the changes into master.
 - Tag a release off of master with the new version and update the GitHub release docs.
 - Build the packages artifacts (see Building above).
-- Upload the artifacts to S3 under the `public.localytics` bucket.
+- Upload the package artifacts to the GitHub release.
 - Update the [homebrew formula](https://github.com/cogito-lang/homebrew-formulae/blob/master/Formula/cogito.rb) to point to the latest version.
 
 ## Credits
