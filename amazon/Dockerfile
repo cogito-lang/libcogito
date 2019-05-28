@@ -1,5 +1,5 @@
 FROM amazonlinux:latest
-MAINTAINER oss@localytics.com
+MAINTAINER kevin.deisz@gmail.com
 
 RUN yum -y update
 RUN yum -y install gcc44 gcc-c++ libgcc44 rpm-build

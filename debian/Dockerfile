@@ -1,8 +1,8 @@
 FROM debian:jessie
-MAINTAINER oss@localytics.com
+MAINTAINER kevin.deisz@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV USER localytics
+ENV USER kddeisz
 
 RUN apt-get update
 RUN apt-get install -y --fix-missing build-essential

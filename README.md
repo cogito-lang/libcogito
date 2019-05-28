@@ -1,6 +1,6 @@
 # libcogito
 
-[![Build Status](https://travis-ci.org/localytics/libcogito.svg?branch=master)](https://travis-ci.org/localytics/libcogito)
+[![Build Status](https://travis-ci.com/cogito-lang/libcogito.svg?branch=master)](https://travis-ci.com/cogito-lang/libcogito)
 
 Cogito allows you to define your AWS IAM policies using a smaller, easier-to-read format. By writing:
 
@@ -37,10 +37,10 @@ cogito will generate:
 
 ## Installation
 
-To get started on Mac, we host Cogito as a [homebrew formula](https://github.com/localytics/homebrew-formulae), so to install run:
+To get started on Mac, we host Cogito as a [homebrew formula](https://github.com/cogito-lang/homebrew-formulae), so to install run:
  
 ```sh
-brew tap localytics/formulae
+brew tap cogito-lang/formulae
 brew install cogito
 ```
  
@@ -161,7 +161,7 @@ Releasing a new version requires updating things in a couple places - follow the
 - Tag a release off of master with the new version and update the GitHub release docs.
 - Build the packages artifacts (see Building above).
 - Upload the artifacts to S3 under the `public.localytics` bucket.
-- Update the [homebrew formula](https://github.com/localytics/homebrew-formulae/blob/master/Formula/cogito.rb) to point to the latest version.
+- Update the [homebrew formula](https://github.com/cogito-lang/homebrew-formulae/blob/master/Formula/cogito.rb) to point to the latest version.
 
 ## Credits
 

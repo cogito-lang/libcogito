@@ -1,10 +1,10 @@
 Source: libcogito
 Priority: optional
-Maintainer: Localytics <oss@localytics.com>
+Maintainer: Kevin Deisz <kevin.deisz@gmail.com>
 Build-Depends: debhelper (>= 9), autotools-dev
 Standards-Version: 3.9.5
 Section: libs
-Homepage: <https://github.com/localytics/libcogito>
+Homepage: <https://github.com/cogito-lang/libcogito>
 
 Package: libcogito
 Architecture: any
