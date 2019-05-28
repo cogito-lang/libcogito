@@ -121,7 +121,7 @@ int cg_to_iam(cg_buf_t *buffer, char *str);
 
 where the return value will be a 0 in the case of success and an error code otherwise.
 
-## Dependencies
+## Development
 
 You need to install autoconf and automake for the `autoreconf -i` command to
 work, like so:
@@ -136,7 +136,13 @@ You may need to link them manually depending on your configuration, which you ca
 
     $ brew link flex --force
 
-## Testing
+Once you have the depedencies installed, you can generate all of the necessary files by running:
+
+    $ autoreconf -i
+    $ ./configure
+    $ make
+
+### Testing
 
 In order to work with the tests, ensure you have `check` installed on your system:
 
@@ -150,7 +156,7 @@ to run the unit tests. In order to run the integration tests, run:
 
     $ tests/integration/test
 
-## Building
+### Building
 
 To build the necessary artifacts, make sure `docker` is running on your machine. Then, ensure that you've built the necessary autotools files with `autoreconf -i` and `./configure`. Then, to build the debian package, run:
 
@@ -160,7 +166,7 @@ And to build the Amazon Linux package, run:
 
     $ make amazon-build
 
-## Releasing
+### Releasing
 
 Releasing a new version requires updating things in a couple places - follow the below script:
 
