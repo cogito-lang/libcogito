@@ -37,26 +37,34 @@ cogito will generate:
 
 ## Installation
 
-To get started on Mac, we host Cogito as a [homebrew formula](https://github.com/cogito-lang/homebrew-formulae), so to install run:
+### Mac
+
+Cogito is hosted as a [homebrew formula](https://github.com/cogito-lang/homebrew-formulae), you can install by running:
  
 ```sh
 brew tap cogito-lang/formulae
 brew install cogito
 ```
+
+### Amazon linux
+
+You can download the appropriate object file from the GitHub release here:
  
-On other debian-based systems, you can install it with:
+```sh
+wget https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito.so
+```
+
+### Debian
+
+You can install it with:
  
 ```sh
 FILE=$(mktemp)
 wget 'https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito_0.2.0-1_amd64.deb' -qO $FILE
 sudo dpkg -i $FILE && rm $FILE
 ```
- 
-On amazon linux, you can download the appropriate object file from the GitHub release here:
- 
-```sh
-wget https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito.so
-```
+
+### Source
 
 To install from source, checkout this repository and run:
 
