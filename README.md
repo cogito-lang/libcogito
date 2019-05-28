@@ -46,7 +46,7 @@ brew tap cogito-lang/formulae
 brew install cogito
 ```
 
-### Amazon linux
+### Amazon
 
 You can download the appropriate object file from the GitHub release here:
  
@@ -56,7 +56,7 @@ wget https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito
 
 ### Debian
 
-You can install it with:
+You can download the appropriate object file from the GitHub release here:
  
 ```sh
 FILE=$(mktemp)
