@@ -1,0 +1,14 @@
+name: Main
+on: push
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+    - run: sudo apt-get install bison check flex
+    - uses: actions/checkout@master
+    - run: autoreconf -i
+    - run: ./configure
+    - run: make
+    - run: make check
+    - run: tests/integration/test
